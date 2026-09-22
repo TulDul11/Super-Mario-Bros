@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [System.NonSerialized] public Rigidbody2D marioBody;
     [System.NonSerialized] public SpriteRenderer marioSprite;
+    public GameManager gameManager;
 
     public float speed = 150;
     public float maxSpeed = 5;
@@ -23,8 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Collided with Goomba!");
-            Time.timeScale = 0.0f;
+            gameManager.GameOver();
             disable = true;
         }
     }

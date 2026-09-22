@@ -22,11 +22,6 @@ public class EnemyMovement : MonoBehaviour
         enemyBody.MovePosition(enemyBody.position + velocity * Time.fixedDeltaTime);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log(other.gameObject.name);
-    }
-
     void Start()
     {
         enemyBody = GetComponent<Rigidbody2D>();

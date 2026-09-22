@@ -4,18 +4,24 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public PlayerMovement Mario;
+    public PlayerMovement mario;
     public TextMeshProUGUI scoreText;
     public GameObject enemies;
-    public JumpOverGoomba JumpOverGoomba;
-    public Canvas ScoreCanvas;
-    public Canvas GameOverCanvas;
+    public JumpOverGoomba jumpOverGoomba;
+    public GameObject scoreCanvas;
+    public GameObject gameOverCanvas;
+    public TextMeshProUGUI gameOverScoreText;
 
     private void ResetGame()
     {
-        Mario.marioBody.transform.position = new Vector3(0.0f, -3.0f, 0.0f);
-        Mario.faceRightState = true;
-        Mario.marioSprite.flipX = false;
+        scoreCanvas.SetActive(true);
+        gameOverCanvas.SetActive(false);
+
+        mario.marioBody.transform.position = new Vector3(0.0f, -3.0f, 0.0f);
+        mario.marioBody.linearVelocity = new Vector2(0.0f, 0.0f);
+        mario.faceRightState = true;
+        mario.marioSprite.flipX = false;
+
         scoreText.text = "Score: 0";
         foreach (Transform eachChild in enemies.transform)
         {
@@ -26,21 +32,29 @@ public class GameManager : MonoBehaviour
             eachChild.transform.localPosition = enemy.startPosition;
         }
         
-        JumpOverGoomba.score = 0;
-        Mario.disable = false;
+        jumpOverGoomba.score = 0;
+        mario.disable = false;
     }
 
     public void RestartButtonCallback(int input)
     {
-        Debug.Log("Restart!");
         ResetGame();
         Time.timeScale = 1.0f;
     }
 
+    public void GameOver()
+    {
+        scoreCanvas.SetActive(false);
+        gameOverCanvas.SetActive(true);
+        gameOverScoreText.text = "Score: " + jumpOverGoomba.score.ToString();
+        Time.timeScale = 0.0f;
+    }
 
     void Start()
     {
-        
+        scoreCanvas.SetActive(true);
+        gameOverCanvas.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame

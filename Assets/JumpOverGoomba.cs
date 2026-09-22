@@ -24,16 +24,7 @@ public class JumpOverGoomba : MonoBehaviour
 
     private bool onGroundCheck()
     {
-        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, maxDistance, layerMask))
-        {
-            Debug.Log("On the ground.");
-            return true;
-        }
-        else
-        {
-            Debug.Log("Not on the ground.");
-            return false;
-        }
+        return Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, maxDistance, layerMask);
     }
 
     void OnDrawGizmos()
@@ -67,7 +58,6 @@ public class JumpOverGoomba : MonoBehaviour
                 countScoreState = false;
                 score += 100;
                 scoreText.text = "Score: " + score.ToString();
-                Debug.Log(score);
             }
         }
     }
