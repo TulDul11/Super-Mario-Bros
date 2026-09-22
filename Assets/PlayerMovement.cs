@@ -3,27 +3,46 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D marioBody;
+    private SpriteRenderer marioSprite;
     public float speed = 10;
     public float maxSpeed = 20;
     public float upSpeed = 10;
     private bool onGroundState = false;
+    private bool faceRightState = true;
 
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ground")) onGroundState = true;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Collided with Goomba!");
+        }
+    }
+
     void Start()
     {
         Application.targetFrameRate = 30;
         marioBody = GetComponent<Rigidbody2D>();
+        marioSprite = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown("a") && faceRightState)
+        {
+            faceRightState = false;
+            marioSprite.flipX = true;
+        }
+
+        if (Input.GetKeyDown("d") && !faceRightState)
+        {
+            faceRightState = true;
+            marioSprite.flipX = false;
+        }
     }
 
     void FixedUpdate()
