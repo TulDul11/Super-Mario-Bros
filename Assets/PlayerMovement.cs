@@ -4,9 +4,9 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D marioBody;
     private SpriteRenderer marioSprite;
-    public float speed = 10;
-    public float maxSpeed = 20;
-    public float upSpeed = 10;
+    public float speed = 150;
+    public float maxSpeed = 5;
+    public float upSpeed = 15;
     private bool onGroundState = false;
     private bool faceRightState = true;
 

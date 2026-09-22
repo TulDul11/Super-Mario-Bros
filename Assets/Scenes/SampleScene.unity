@@ -377,8 +377,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -210, y: 160}
-  m_SizeDelta: {x: 200, y: 25}
+  m_AnchoredPosition: {x: -160, y: 160}
+  m_SizeDelta: {x: 300, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &293952024
 MonoBehaviour:
@@ -1177,7 +1177,7 @@ GameObject:
   - component: {fileID: 609246688}
   - component: {fileID: 609246687}
   - component: {fileID: 609246686}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -3289,6 +3289,7 @@ GameObject:
   - component: {fileID: 1876254880}
   - component: {fileID: 1876254881}
   - component: {fileID: 1876254882}
+  - component: {fileID: 1876254883}
   m_Layer: 0
   m_Name: Mario
   m_TagString: Untagged
@@ -3409,9 +3410,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f15da312b492284c9b84907a2b0a6af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  speed: 10
-  maxSpeed: 20
-  upSpeed: 10
+  speed: 150
+  maxSpeed: 5
+  upSpeed: 15
 --- !u!61 &1876254882
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3458,6 +3459,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.8291243, y: 1.0539993}
   m_EdgeRadius: 0
+--- !u!114 &1876254883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876254877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202222e1e5abe174da6bc2e36185122c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JumpOverGoomba
+  enemyLocation: {fileID: 1988805231}
+  scoreText: {fileID: 293952024}
+  boxSize: {x: 0.75, y: 3, z: 0}
+  maxDistance: 1.5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &1988805230
 GameObject:
   m_ObjectHideFlags: 0
