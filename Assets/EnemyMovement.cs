@@ -6,12 +6,13 @@ public class EnemyMovement : MonoBehaviour
 
     private float maxOffset = 5.0f;
     private float enemyPatrolTime = 2.0f;
-    private int moveRight = 1;
+    [System.NonSerialized] public int moveRight = 1;
+    [System.NonSerialized] public Vector3 startPosition = new(4.0f, -2.5f, 0.0f);
 
     private float originalX;
     private Vector2 velocity;
 
-    void ComputeVelocity()
+    public void ComputeVelocity()
     {
         velocity = new(moveRight * maxOffset / enemyPatrolTime, 0);
     }
