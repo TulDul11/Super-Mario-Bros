@@ -4,18 +4,15 @@ using UnityEditor.PackageManager.Requests;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D marioBody;
-    private SpriteRenderer marioSprite;
-    public TextMeshProUGUI scoreText;
-    public GameObject enemies;
-    public JumpOverGoomba JumpOverGoomba;
+    [System.NonSerialized] public Rigidbody2D marioBody;
+    [System.NonSerialized] public SpriteRenderer marioSprite;
 
     public float speed = 150;
     public float maxSpeed = 5;
     public float upSpeed = 15;
-    private bool onGroundState = false;
-    private bool faceRightState = true;
-    private bool disable = false;
+    [System.NonSerialized] public bool onGroundState = false;
+    [System.NonSerialized] public bool faceRightState = true;
+    [System.NonSerialized] public bool disable = false;
 
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -30,31 +27,6 @@ public class PlayerMovement : MonoBehaviour
             Time.timeScale = 0.0f;
             disable = true;
         }
-    }
-
-    private void ResetGame()
-    {
-        marioBody.transform.position = new Vector3(0.0f, -3.0f, 0.0f);
-        faceRightState = true;
-        marioSprite.flipX = false;
-        scoreText.text = "Score: 0";
-        foreach (Transform eachChild in enemies.transform)
-        {
-            var enemy = eachChild.GetComponent<EnemyMovement>();
-            enemy.moveRight = 1;
-            enemy.ComputeVelocity();
-
-            eachChild.transform.localPosition = enemy.startPosition;
-        }
-        
-        JumpOverGoomba.score = 0;
-    }
-
-    public void RestartButtonCallback(int input)
-    {
-        Debug.Log("Restart!");
-        ResetGame();
-        Time.timeScale = 1.0f;
     }
 
     void Start()
