@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
     public GameObject scoreCanvas;
     public GameObject gameOverCanvas;
     public TextMeshProUGUI gameOverScoreText;
+
+    [NonSerialized] public int score = 0;
 
     private void ResetGame()
     {
@@ -31,7 +34,7 @@ public class GameManager : MonoBehaviour
             eachChild.transform.localPosition = enemy.startPosition;
         }
         
-        jumpOverGoomba.score = 0;
+        score = 0;
         mario.disable = false;
     }
 
@@ -45,7 +48,7 @@ public class GameManager : MonoBehaviour
     {
         scoreCanvas.SetActive(false);
         gameOverCanvas.SetActive(true);
-        gameOverScoreText.text = "Score: " + jumpOverGoomba.score.ToString();
+        gameOverScoreText.text = "Score: " + score.ToString();
         Time.timeScale = 0.0f;
     }
 

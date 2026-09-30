@@ -3962,8 +3962,8 @@ MonoBehaviour:
   riseGravity: 3
   fallMultiplier: 1.8
   lowJumpMultiplier: 2.5
-  boxSize: {x: 0.75, y: 0.3}
-  maxDistance: 0.2
+  boxSize: {x: 0.75, y: 0.15}
+  maxDistance: 0.1
   layerMask:
     serializedVersion: 2
     m_Bits: 8

@@ -5,8 +5,7 @@ using UnityEngine;
 public class JumpOverGoomba : MonoBehaviour
 {
     public PlayerMovement mario;
-    
-    [NonSerialized] public int score = 0;
+    public GameManager gameManager;
 
     public Transform enemyLocation;
     public TextMeshProUGUI scoreText;
@@ -36,8 +35,8 @@ public class JumpOverGoomba : MonoBehaviour
             if (Math.Abs(mario.transform.position.x - enemyLocation.position.x) < 0.5f)
             {
                 countScoreState = false;
-                score += 100;
-                scoreText.text = "Score: " + score.ToString();
+                gameManager.score += 100;
+                scoreText.text = "Score: " + gameManager.score.ToString();
             }
         }
     }
