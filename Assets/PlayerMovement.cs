@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     // Private
     private bool moveReleased = false;
     Rigidbody2D marioBody;
+    Vector3 startPosition;
 
     public bool IsGrounded()
     {
@@ -61,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void ResetMario()
     {
-        transform.position = new Vector3(0.0f, -3.0f, 0.0f);
+        transform.position = startPosition;
         marioBody.linearVelocity = new Vector2(0.0f, 0.0f);
         faceRightState = true;
         alive = true;
@@ -81,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
+        startPosition = transform.position;
         marioBody = GetComponent<Rigidbody2D>();
     }
 

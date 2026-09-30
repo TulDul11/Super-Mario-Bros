@@ -12,6 +12,17 @@ public class CameraController : MonoBehaviour
     float startX;
     float endX;
     float viewportHalfwidth;
+    Vector3 startPosition;
+
+    public void ResetCamera()
+    {
+        transform.position = startPosition;
+    }
+
+    void Awake()
+    {
+        startPosition = transform.position;
+    }
 
     void Start()
     {
@@ -29,6 +40,5 @@ public class CameraController : MonoBehaviour
         {
             this.transform.position = new Vector3(desiredX, this.transform.position.y, this.transform.position.z);
         }
-        
     }
 }

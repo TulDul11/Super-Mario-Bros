@@ -24,7 +24,7 @@ public class JumpOverGoomba : MonoBehaviour
             if (Math.Abs(mario.transform.position.x - enemyLocation.position.x) < 0.5f)
             {
                 countScoreState = false;
-                gameManager.AddScore();
+                gameManager.AddScore(100);
             }
         }
     }

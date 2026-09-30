@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerMovement marioMovement;
     [SerializeField] JumpOverGoomba jumpOverGoomba;
     [SerializeField] PlayerAnimator marioAnimator;
+    [SerializeField] CameraController cameraController;
     [SerializeField] PlayerAudio marioAudio;
     [SerializeField] GameObject enemies;
     [SerializeField] GameObject scoreCanvas;
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviour
 
         marioMovement.ResetMario();
         marioAnimator.ResetMario();
+
+        cameraController.ResetCamera();
 
         scoreText.text = "Score: 0";
         foreach (Transform eachChild in enemies.transform)
@@ -49,9 +52,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0.0f;
     }
 
-    public void AddScore()
+    public void AddScore(int n)
     {
-        score += 100;
+        score += n;
         scoreText.text = "Score: " + score.ToString();
     }
 
