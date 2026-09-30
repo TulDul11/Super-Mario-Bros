@@ -1,24 +1,30 @@
 using UnityEngine;
-using TMPro;
-using UnityEditor.PackageManager.Requests;
+using System;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [System.NonSerialized] public Rigidbody2D marioBody;
-    [System.NonSerialized] public SpriteRenderer marioSprite;
+    [NonSerialized] public Rigidbody2D marioBody;
+    [NonSerialized] public SpriteRenderer marioSprite;
     public GameManager gameManager;
 
-    public float speed = 150;
-    public float maxSpeed = 5;
-    public float upSpeed = 15;
-    [System.NonSerialized] public bool onGroundState = false;
-    [System.NonSerialized] public bool faceRightState = true;
-    [System.NonSerialized] public bool disable = false;
+    public float speed = 150.0f;
+    public float maxSpeed = 5.0f;
+    public float upSpeed = 15.0f;
+    public float riseGravity = 3.0f;
+    public float fallMultiplier = 1.8f;
+    public float lowJumpMultiplier = 2.5f;
+    
+    [NonSerialized] public bool faceRightState = true;
+    [NonSerialized] public bool disable = false;
 
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.CompareTag("Ground")) onGroundState = true;
-    }
+    [SerializeField] Vector2 boxSize;
+    [SerializeField] float maxDistance;
+    [SerializeField] LayerMask layerMask;
+    [SerializeField] Vector2 boxOffset;
+
+    [NonSerialized] public bool jumpPressed = false;
+    private bool moveReleased = false;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -29,9 +35,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public bool IsGrounded()
+    {
+        Vector2 origin = (Vector2)transform.position + boxOffset;
+        return Physics2D.BoxCast(origin, boxSize, 0f, Vector2.down, maxDistance, layerMask);
+    }
+
+    void OnDrawGizmos()
+    {
+        Vector2 origin = (Vector2)transform.position + boxOffset;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(origin + Vector2.down * maxDistance, boxSize);
+    }
+
     void Start()
     {
-        Application.targetFrameRate = 30;
         marioBody = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();
     }
@@ -54,6 +72,11 @@ public class PlayerMovement : MonoBehaviour
             faceRightState = true;
             marioSprite.flipX = false;
         }
+
+        if (Input.GetKeyUp("a") || Input.GetKeyUp("d"))
+        {
+            moveReleased = true;
+        }
     }
 
     void FixedUpdate()
@@ -63,21 +86,39 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector2 movement = new(moveHorizontal, 0);
 
-            if (marioBody.linearVelocity.magnitude < maxSpeed)
+            if (Math.Abs(marioBody.linearVelocity.x) < maxSpeed)
             {
                 marioBody.AddForce(movement*speed);
             }
         }
 
-        if (Input.GetKeyUp("a") || Input.GetKeyUp("d"))
+        if (moveReleased)
         {
             marioBody.linearVelocity = Vector2.zero;
+            moveReleased = false;
         }
 
-        if (Input.GetKeyDown("space") && onGroundState)
+        if (Input.GetKey(KeyCode.Space) && IsGrounded())
         {
-            marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
-            onGroundState = false;
+            jumpPressed = true;
         }
+
+        if (jumpPressed)
+        {
+            marioBody.linearVelocity = new Vector2(marioBody.linearVelocity.x, 0f);
+            marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
+            jumpPressed = false;
+        }
+
+        bool holdingJump = Input.GetKey(KeyCode.Space);
+        float velocityY = marioBody.linearVelocity.y;
+
+        if (velocityY > 0 && !holdingJump)
+            marioBody.gravityScale = riseGravity * lowJumpMultiplier;
+        else if (velocityY < 0)
+            marioBody.gravityScale = riseGravity * fallMultiplier;
+        else
+            marioBody.gravityScale = riseGravity;
+    
     }
 }

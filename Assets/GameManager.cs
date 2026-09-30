@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using TMPro;
 
@@ -52,6 +51,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 30;
         scoreCanvas.SetActive(true);
         gameOverCanvas.SetActive(false);
         Time.timeScale = 1f;
