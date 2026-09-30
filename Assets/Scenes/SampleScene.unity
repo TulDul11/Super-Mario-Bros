@@ -673,9 +673,9 @@ GameObject:
   - component: {fileID: 406961516}
   - component: {fileID: 406961518}
   - component: {fileID: 406961517}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bricks - 3
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1159,11 +1159,11 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: -10}
+  m_LocalPosition: {x: 0, y: 0.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1876254879}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &603784358
 GameObject:
@@ -1176,9 +1176,9 @@ GameObject:
   - component: {fileID: 603784359}
   - component: {fileID: 603784361}
   - component: {fileID: 603784360}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Question Box - 3
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1530,7 +1530,7 @@ GameObject:
   m_Component:
   - component: {fileID: 683172922}
   - component: {fileID: 683172923}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Pipe Head - 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1862,7 +1862,7 @@ MonoBehaviour:
       - m_Target: {fileID: 807529017}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: RestartButtonCallback
-        m_Mode: 3
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1938,8 +1938,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb352f980eef84e44acd6d93b004d767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  mario: {fileID: 1876254881}
+  marioMovement: {fileID: 1876254881}
   jumpOverGoomba: {fileID: 1876254883}
+  marioAnimator: {fileID: 1876254885}
   enemies: {fileID: 1513102754}
   scoreCanvas: {fileID: 193082598}
   gameOverCanvas: {fileID: 1950948683}
@@ -2062,9 +2063,9 @@ GameObject:
   - component: {fileID: 890226069}
   - component: {fileID: 890226071}
   - component: {fileID: 890226070}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Question Box - 2
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2291,9 +2292,9 @@ GameObject:
   - component: {fileID: 910319073}
   - component: {fileID: 910319075}
   - component: {fileID: 910319074}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Question Box - 4
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2827,9 +2828,9 @@ GameObject:
   - component: {fileID: 1290490365}
   - component: {fileID: 1290490367}
   - component: {fileID: 1290490366}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bricks - 2
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2965,9 +2966,9 @@ GameObject:
   - component: {fileID: 1393012064}
   - component: {fileID: 1393012066}
   - component: {fileID: 1393012065}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bricks - 1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3226,9 +3227,9 @@ GameObject:
   - component: {fileID: 1535966016}
   - component: {fileID: 1535966018}
   - component: {fileID: 1535966017}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Question Box - 1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3644,7 +3645,7 @@ MonoBehaviour:
       - m_Target: {fileID: 807529017}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: RestartButtonCallback
-        m_Mode: 3
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3834,6 +3835,8 @@ GameObject:
   - component: {fileID: 1876254881}
   - component: {fileID: 1876254882}
   - component: {fileID: 1876254883}
+  - component: {fileID: 1876254884}
+  - component: {fileID: 1876254885}
   m_Layer: 0
   m_Name: Mario
   m_TagString: Untagged
@@ -3890,7 +3893,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300088, guid: 4d953ee8a2e3043538664e5eb88ff553, type: 3}
+  m_Sprite: {fileID: 21300012, guid: f1bde3f95d8d049e59a4208ea4358c51, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3909,11 +3912,10 @@ Transform:
   m_GameObject: {fileID: 1876254877}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3, z: 0}
+  m_LocalPosition: {x: 0, y: -2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 519420032}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1876254880
@@ -3963,11 +3965,10 @@ MonoBehaviour:
   fallMultiplier: 1.8
   lowJumpMultiplier: 2.5
   boxSize: {x: 0.75, y: 0.15}
-  maxDistance: 0.1
+  maxDistance: 0.6
   layerMask:
     serializedVersion: 2
     m_Bits: 8
-  boxOffset: {x: 0, y: 0}
 --- !u!61 &1876254882
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4002,17 +4003,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.001455307, y: 0.50265944}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1, y: 2}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.8125, y: 1}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.770085, y: 1.021281}
+  m_Size: {x: 0.85, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &1876254883
 MonoBehaviour:
@@ -4029,6 +4030,42 @@ MonoBehaviour:
   mario: {fileID: 1876254881}
   gameManager: {fileID: 807529017}
   enemyLocation: {fileID: 1988805231}
+--- !u!95 &1876254884
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876254877}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e15240cdc8313ca41afece3238f43204, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1876254885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876254877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f2039f8d459264b9c75a1ee1a15b08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  marioMovement: {fileID: 1876254881}
+  marioAnimator: {fileID: 1876254884}
 --- !u!1 &1950948683
 GameObject:
   m_ObjectHideFlags: 0
@@ -4325,7 +4362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2041419416}
   - component: {fileID: 2041419417}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Pipe Head - 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4416,7 +4453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2099372712}
   - component: {fileID: 2099372713}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Pipe Head - 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4716,6 +4753,7 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 519420032}
   - {fileID: 1876254879}
   - {fileID: 2139427060}
   - {fileID: 1714446870}

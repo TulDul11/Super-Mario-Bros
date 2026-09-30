@@ -11,16 +11,6 @@ public class JumpOverGoomba : MonoBehaviour
     // Private
     bool countScoreState = false;
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     void FixedUpdate()
     {
         if (mario.IsGrounded())

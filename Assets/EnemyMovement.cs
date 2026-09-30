@@ -33,19 +33,10 @@ public class EnemyMovement : MonoBehaviour
 
     void Awake()
     {
-        startPosition = transform.position;
-    }
-
-    void Start()
-    {
         enemyBody = GetComponent<Rigidbody2D>();
+        startPosition = transform.position;
         originalX = transform.position.x;
         ComputeVelocity();
-    }
-
-    void Update()
-    {
-        
     }
 
     void FixedUpdate()

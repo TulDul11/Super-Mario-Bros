@@ -4,8 +4,9 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     [Header("References")]   
-    [SerializeField] PlayerMovement mario;
+    [SerializeField] PlayerMovement marioMovement;
     [SerializeField] JumpOverGoomba jumpOverGoomba;
+    [SerializeField] PlayerAnimator marioAnimator;
     [SerializeField] GameObject enemies;
     [SerializeField] GameObject scoreCanvas;
     [SerializeField] GameObject gameOverCanvas;
@@ -20,7 +21,8 @@ public class GameManager : MonoBehaviour
         scoreCanvas.SetActive(true);
         gameOverCanvas.SetActive(false);
 
-        mario.ResetMario();
+        marioMovement.ResetMario();
+        marioAnimator.ResetMario();
 
         scoreText.text = "Score: 0";
         foreach (Transform eachChild in enemies.transform)
@@ -29,7 +31,7 @@ public class GameManager : MonoBehaviour
         }
         
         score = 0;
-        mario.disable = false;
+        marioMovement.disable = false;
     }
 
     public void RestartButtonCallback()
@@ -58,11 +60,5 @@ public class GameManager : MonoBehaviour
         scoreCanvas.SetActive(true);
         gameOverCanvas.SetActive(false);
         Time.timeScale = 1f;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed = 5.0f;
 
     [Header("Jump")]
-    [SerializeField] float upSpeed = 15.0f;
+    [SerializeField] public float upSpeed = 15.0f;
     [SerializeField] float riseGravity = 3.0f;
     [SerializeField] float fallMultiplier = 1.8f;
     [SerializeField] float lowJumpMultiplier = 2.5f;
@@ -22,14 +22,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask layerMask;
 
     // Public (To other scripts)
-    [NonSerialized] public Rigidbody2D marioBody;
-    [NonSerialized] public SpriteRenderer marioSprite;
     [NonSerialized] public bool faceRightState = true;
     [NonSerialized] public bool disable = false;
     [NonSerialized] public bool jumpPressed = false;
 
     // Private
     private bool moveReleased = false;
+    Rigidbody2D marioBody;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -58,13 +57,11 @@ public class PlayerMovement : MonoBehaviour
         marioBody.transform.position = new Vector3(0.0f, -3.0f, 0.0f);
         marioBody.linearVelocity = new Vector2(0.0f, 0.0f);
         faceRightState = true;
-        marioSprite.flipX = false;
     }
 
-    void Start()
+    void Awake()
     {
         marioBody = GetComponent<Rigidbody2D>();
-        marioSprite = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -77,13 +74,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A) && faceRightState)
         {
             faceRightState = false;
-            marioSprite.flipX = true;
         }
 
         if (Input.GetKeyDown(KeyCode.D) && !faceRightState)
         {
             faceRightState = true;
-            marioSprite.flipX = false;
         }
 
         if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
