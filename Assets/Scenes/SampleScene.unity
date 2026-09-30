@@ -1941,6 +1941,7 @@ MonoBehaviour:
   marioMovement: {fileID: 1876254881}
   jumpOverGoomba: {fileID: 1876254883}
   marioAnimator: {fileID: 1876254885}
+  marioAudio: {fileID: 1876254887}
   enemies: {fileID: 1513102754}
   scoreCanvas: {fileID: 193082598}
   gameOverCanvas: {fileID: 1950948683}
@@ -3837,6 +3838,8 @@ GameObject:
   - component: {fileID: 1876254883}
   - component: {fileID: 1876254884}
   - component: {fileID: 1876254885}
+  - component: {fileID: 1876254887}
+  - component: {fileID: 1876254886}
   m_Layer: 0
   m_Name: Mario
   m_TagString: Untagged
@@ -3958,6 +3961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   gameManager: {fileID: 807529017}
+  playerAnimator: {fileID: 1876254885}
   speed: 60
   maxSpeed: 6
   upSpeed: 16
@@ -3969,6 +3973,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 8
+  deathImpulse: 20
 --- !u!61 &1876254882
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4066,6 +4071,118 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   marioMovement: {fileID: 1876254881}
   marioAnimator: {fileID: 1876254884}
+--- !u!82 &1876254886
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876254877}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: bc5ca5e0703c54692a186434e1149ccd, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1876254887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876254877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8c402c8fba2ce4c9945062f48edb85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  marioAudio: {fileID: 1876254886}
+  marioDeath: {fileID: 8300000, guid: 27a9d22cdceb9d6459ce3a32f796799d, type: 3}
+  gameOver: {fileID: 8300000, guid: 6fd1f18ce7cdf476a84bc81adc494f51, type: 3}
 --- !u!1 &1950948683
 GameObject:
   m_ObjectHideFlags: 0

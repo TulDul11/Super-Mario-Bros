@@ -2,15 +2,22 @@ using UnityEngine;
 
 public class PlayerAudio : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("References")]
+    [SerializeField] AudioSource marioAudio;
+    [SerializeField] AudioClip marioDeath;
+    [SerializeField] AudioClip gameOver;
+
+    void PlayJumpSound()
     {
-        
+        marioAudio.PlayOneShot(marioAudio.clip);
     }
 
-    // Update is called once per frame
-    void Update()
+    void PlayDeathSound()
     {
-        
+        marioAudio.PlayOneShot(marioDeath);
+    }
+    public void PlayGameOverSound()
+    {
+        marioAudio.PlayOneShot(gameOver);
     }
 }

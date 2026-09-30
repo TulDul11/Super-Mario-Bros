@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerAnimator : MonoBehaviour
 {
@@ -15,14 +14,11 @@ public class PlayerAnimator : MonoBehaviour
     public void ResetMario()
     {
         marioSprite.flipX = false;
+        marioAnimator.SetTrigger("gameRestart");
     }
-
-    void OnCollisionEnter2D(Collision2D col)
+    public void PlayDeath()
     {
-        if (col.gameObject.CompareTag("Ground") && !marioMovement.IsGrounded())
-        {
-            marioAnimator.SetBool("onGround", marioMovement.IsGrounded());
-        }
+        marioAnimator.Play("mario-die");
     }
 
     void Awake()
@@ -32,40 +28,19 @@ public class PlayerAnimator : MonoBehaviour
 
     void Start()
     {
-        
-        marioAnimator.SetBool("onGround", marioMovement.IsGrounded());
         marioBody = marioMovement.GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
+        bool grounded = marioMovement.IsGrounded();
         marioSprite.flipX = !marioMovement.faceRightState;
 
-        if (Input.GetKeyDown(KeyCode.A) && marioMovement.faceRightState)
-        {
-            if (marioBody.linearVelocity.x > 0.1f)
+        if (marioMovement.isSkid)
                 marioAnimator.SetTrigger("onSkid");
-        }
-
-        if (Input.GetKeyDown(KeyCode.D) && !marioMovement.faceRightState)
-        {
-            if (marioBody.linearVelocity.x < -0.1f)
-                marioAnimator.SetTrigger("onSkid");
-        }
-
+                marioMovement.isSkid = false;
+        
+        marioAnimator.SetBool("onGround", grounded);
         marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.linearVelocity.x));
-
-        if (Input.GetKeyDown(KeyCode.Space) && marioMovement.IsGrounded())
-        {
-            jumpPressed = true;
-        }
-    }
-
-    void FixedUpdate()
-    {
-        if (jumpPressed)
-        {
-            marioAnimator.SetBool("onGround", marioMovement.IsGrounded());
-        }
     }
 }

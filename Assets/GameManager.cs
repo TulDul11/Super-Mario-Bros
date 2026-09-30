@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerMovement marioMovement;
     [SerializeField] JumpOverGoomba jumpOverGoomba;
     [SerializeField] PlayerAnimator marioAnimator;
+    [SerializeField] PlayerAudio marioAudio;
     [SerializeField] GameObject enemies;
     [SerializeField] GameObject scoreCanvas;
     [SerializeField] GameObject gameOverCanvas;
@@ -31,7 +32,6 @@ public class GameManager : MonoBehaviour
         }
         
         score = 0;
-        marioMovement.disable = false;
     }
 
     public void RestartButtonCallback()
@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         scoreCanvas.SetActive(false);
         gameOverCanvas.SetActive(true);
         gameOverScoreText.text = "Score: " + score.ToString();
+        marioAudio.PlayGameOverSound();
         Time.timeScale = 0.0f;
     }
 

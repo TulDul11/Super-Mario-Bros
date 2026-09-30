@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] GameManager gameManager;
+    [SerializeField] PlayerAnimator playerAnimator;
 
     [Header("Movement")]
     [SerializeField] float speed = 150.0f;
@@ -21,28 +22,34 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxDistance;
     [SerializeField] LayerMask layerMask;
 
+    [Header("Death")]
+    [SerializeField] float deathImpulse = 20.0f;
+
     // Public (To other scripts)
     [NonSerialized] public bool faceRightState = true;
-    [NonSerialized] public bool disable = false;
     [NonSerialized] public bool jumpPressed = false;
+    [NonSerialized] public bool alive = true;
+    [NonSerialized] public bool isSkid = false;
 
     // Private
     private bool moveReleased = false;
     Rigidbody2D marioBody;
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            gameManager.GameOver();
-            disable = true;
-        }
-    }
-
     public bool IsGrounded()
     {
         Vector2 origin = (Vector2)transform.position;
         return Physics2D.BoxCast(origin, boxSize, 0f, Vector2.down, maxDistance, layerMask);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy") && alive)
+        {
+            marioBody.linearVelocity = new Vector2(0.0f, 0.0f);
+            playerAnimator.PlayDeath();
+            GetComponent<Collider2D>().enabled = false;
+            alive = false;
+        }
     }
 
     void OnDrawGizmos()
@@ -54,9 +61,22 @@ public class PlayerMovement : MonoBehaviour
 
     public void ResetMario()
     {
-        marioBody.transform.position = new Vector3(0.0f, -3.0f, 0.0f);
+        transform.position = new Vector3(0.0f, -3.0f, 0.0f);
         marioBody.linearVelocity = new Vector2(0.0f, 0.0f);
         faceRightState = true;
+        alive = true;
+        GetComponent<Collider2D>().enabled = true;
+    }
+
+    void PlayDeathImpulse()
+    {
+        marioBody.gravityScale = riseGravity;
+        marioBody.AddForce(Vector2.up * deathImpulse, ForceMode2D.Impulse);
+    }
+
+    void GameOverScene()
+    {
+        gameManager.GameOver();
     }
 
     void Awake()
@@ -66,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (disable)
+        if (!alive)
         {
             return;
         }
@@ -74,11 +94,13 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A) && faceRightState)
         {
             faceRightState = false;
+            isSkid = marioBody.linearVelocity.x > 0.1f && IsGrounded();
         }
 
         if (Input.GetKeyDown(KeyCode.D) && !faceRightState)
         {
             faceRightState = true;
+            isSkid = marioBody.linearVelocity.x < -0.1f && IsGrounded();
         }
 
         if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
@@ -89,6 +111,11 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!alive)
+        {
+            return;
+        }
+
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         if (Mathf.Abs(moveHorizontal) > 0)
         {
