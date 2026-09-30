@@ -42,5 +42,6 @@ public class PlayerAnimator : MonoBehaviour
         
         marioAnimator.SetBool("onGround", grounded);
         marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.linearVelocity.x));
+        marioAnimator.SetFloat("ySpeed", marioBody.linearVelocity.y);
     }
 }
