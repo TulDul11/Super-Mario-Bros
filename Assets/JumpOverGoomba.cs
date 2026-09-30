@@ -1,16 +1,15 @@
 using System;
-using TMPro;
 using UnityEngine;
 
 public class JumpOverGoomba : MonoBehaviour
 {
-    public PlayerMovement mario;
-    public GameManager gameManager;
+    [Header("References")]
+    [SerializeField] PlayerMovement mario;
+    [SerializeField] GameManager gameManager;
+    [SerializeField] Transform enemyLocation;
 
-    public Transform enemyLocation;
-    public TextMeshProUGUI scoreText;
-
-    private bool countScoreState = false;
+    // Private
+    bool countScoreState = false;
 
     void Start()
     {
@@ -35,8 +34,7 @@ public class JumpOverGoomba : MonoBehaviour
             if (Math.Abs(mario.transform.position.x - enemyLocation.position.x) < 0.5f)
             {
                 countScoreState = false;
-                gameManager.score += 100;
-                scoreText.text = "Score: " + gameManager.score.ToString();
+                gameManager.AddScore();
             }
         }
     }

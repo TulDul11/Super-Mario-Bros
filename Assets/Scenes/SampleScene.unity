@@ -1939,11 +1939,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   mario: {fileID: 1876254881}
-  scoreText: {fileID: 293952024}
-  enemies: {fileID: 1513102754}
   jumpOverGoomba: {fileID: 1876254883}
+  enemies: {fileID: 1513102754}
   scoreCanvas: {fileID: 193082598}
   gameOverCanvas: {fileID: 1950948683}
+  scoreText: {fileID: 293952024}
   gameOverScoreText: {fileID: 484040602}
 --- !u!4 &807529018
 Transform:
@@ -4027,8 +4027,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumpOverGoomba
   mario: {fileID: 1876254881}
+  gameManager: {fileID: 807529017}
   enemyLocation: {fileID: 1988805231}
-  scoreText: {fileID: 293952024}
 --- !u!1 &1950948683
 GameObject:
   m_ObjectHideFlags: 0
@@ -4181,6 +4181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da52a3381d76b64595eb7681132a7f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  maxOffset: 5
+  enemyPatrolTime: 2
 --- !u!61 &1988805233
 BoxCollider2D:
   m_ObjectHideFlags: 0

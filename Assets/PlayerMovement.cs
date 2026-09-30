@@ -1,29 +1,34 @@
 using UnityEngine;
 using System;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [NonSerialized] public Rigidbody2D marioBody;
-    [NonSerialized] public SpriteRenderer marioSprite;
-    public GameManager gameManager;
+    [Header("References")]
+    [SerializeField] GameManager gameManager;
 
-    public float speed = 150.0f;
-    public float maxSpeed = 5.0f;
-    public float upSpeed = 15.0f;
-    public float riseGravity = 3.0f;
-    public float fallMultiplier = 1.8f;
-    public float lowJumpMultiplier = 2.5f;
-    
-    [NonSerialized] public bool faceRightState = true;
-    [NonSerialized] public bool disable = false;
+    [Header("Movement")]
+    [SerializeField] float speed = 150.0f;
+    [SerializeField] float maxSpeed = 5.0f;
 
+    [Header("Jump")]
+    [SerializeField] float upSpeed = 15.0f;
+    [SerializeField] float riseGravity = 3.0f;
+    [SerializeField] float fallMultiplier = 1.8f;
+    [SerializeField] float lowJumpMultiplier = 2.5f;
+
+    [Header("Box Cast")]
     [SerializeField] Vector2 boxSize;
     [SerializeField] float maxDistance;
     [SerializeField] LayerMask layerMask;
-    [SerializeField] Vector2 boxOffset;
 
+    // Public (To other scripts)
+    [NonSerialized] public Rigidbody2D marioBody;
+    [NonSerialized] public SpriteRenderer marioSprite;
+    [NonSerialized] public bool faceRightState = true;
+    [NonSerialized] public bool disable = false;
     [NonSerialized] public bool jumpPressed = false;
+
+    // Private
     private bool moveReleased = false;
 
     void OnTriggerEnter2D(Collider2D other)
@@ -37,15 +42,23 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded()
     {
-        Vector2 origin = (Vector2)transform.position + boxOffset;
+        Vector2 origin = (Vector2)transform.position;
         return Physics2D.BoxCast(origin, boxSize, 0f, Vector2.down, maxDistance, layerMask);
     }
 
     void OnDrawGizmos()
     {
-        Vector2 origin = (Vector2)transform.position + boxOffset;
+        Vector2 origin = (Vector2)transform.position;
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(origin + Vector2.down * maxDistance, boxSize);
+    }
+
+    public void ResetMario()
+    {
+        marioBody.transform.position = new Vector3(0.0f, -3.0f, 0.0f);
+        marioBody.linearVelocity = new Vector2(0.0f, 0.0f);
+        faceRightState = true;
+        marioSprite.flipX = false;
     }
 
     void Start()
@@ -61,19 +74,19 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown("a") && faceRightState)
+        if (Input.GetKeyDown(KeyCode.A) && faceRightState)
         {
             faceRightState = false;
             marioSprite.flipX = true;
         }
 
-        if (Input.GetKeyDown("d") && !faceRightState)
+        if (Input.GetKeyDown(KeyCode.D) && !faceRightState)
         {
             faceRightState = true;
             marioSprite.flipX = false;
         }
 
-        if (Input.GetKeyUp("a") || Input.GetKeyUp("d"))
+        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
         {
             moveReleased = true;
         }
@@ -94,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (moveReleased)
         {
-            marioBody.linearVelocity = Vector2.zero;
+            marioBody.linearVelocity = new Vector2(0f, marioBody.linearVelocity.y);
             moveReleased = false;
         }
 

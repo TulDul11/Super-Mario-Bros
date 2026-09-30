@@ -1,44 +1,38 @@
 using UnityEngine;
 using TMPro;
-using System;
 
 public class GameManager : MonoBehaviour
 {
-    public PlayerMovement mario;
-    public TextMeshProUGUI scoreText;
-    public GameObject enemies;
-    public JumpOverGoomba jumpOverGoomba;
-    public GameObject scoreCanvas;
-    public GameObject gameOverCanvas;
-    public TextMeshProUGUI gameOverScoreText;
-
-    [NonSerialized] public int score = 0;
+    [Header("References")]   
+    [SerializeField] PlayerMovement mario;
+    [SerializeField] JumpOverGoomba jumpOverGoomba;
+    [SerializeField] GameObject enemies;
+    [SerializeField] GameObject scoreCanvas;
+    [SerializeField] GameObject gameOverCanvas;
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI gameOverScoreText;
+    
+    // Private
+    int score = 0;
 
     private void ResetGame()
     {
         scoreCanvas.SetActive(true);
         gameOverCanvas.SetActive(false);
 
-        mario.marioBody.transform.position = new Vector3(0.0f, -3.0f, 0.0f);
-        mario.marioBody.linearVelocity = new Vector2(0.0f, 0.0f);
-        mario.faceRightState = true;
-        mario.marioSprite.flipX = false;
+        mario.ResetMario();
 
         scoreText.text = "Score: 0";
         foreach (Transform eachChild in enemies.transform)
         {
-            var enemy = eachChild.GetComponent<EnemyMovement>();
-            enemy.moveRight = 1;
-            enemy.ComputeVelocity();
-
-            eachChild.transform.localPosition = enemy.startPosition;
+            eachChild.GetComponent<EnemyMovement>().ResetGoomba();
         }
         
         score = 0;
         mario.disable = false;
     }
 
-    public void RestartButtonCallback(int input)
+    public void RestartButtonCallback()
     {
         ResetGame();
         Time.timeScale = 1.0f;
@@ -52,9 +46,15 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0.0f;
     }
 
+    public void AddScore()
+    {
+        score += 100;
+        scoreText.text = "Score: " + score.ToString();
+    }
+
     void Start()
     {
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = 60;
         scoreCanvas.SetActive(true);
         gameOverCanvas.SetActive(false);
         Time.timeScale = 1f;
