@@ -1,42 +1,43 @@
-using System;
 using UnityEngine;
 using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public PlayerMovement mario;
-    public TextMeshProUGUI scoreText;
-    public GameObject enemies;
-    public JumpOverGoomba jumpOverGoomba;
-    public GameObject scoreCanvas;
-    public GameObject gameOverCanvas;
-    public TextMeshProUGUI gameOverScoreText;
+    [Header("References")]   
+    [SerializeField] PlayerMovement marioMovement;
+    [SerializeField] JumpOverGoomba jumpOverGoomba;
+    [SerializeField] PlayerAnimator marioAnimator;
+    [SerializeField] CameraController cameraController;
+    [SerializeField] PlayerAudio marioAudio;
+    [SerializeField] GameObject enemies;
+    [SerializeField] GameObject scoreCanvas;
+    [SerializeField] GameObject gameOverCanvas;
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI gameOverScoreText;
+    
+    // Private
+    int score = 0;
 
     private void ResetGame()
     {
         scoreCanvas.SetActive(true);
         gameOverCanvas.SetActive(false);
 
-        mario.marioBody.transform.position = new Vector3(0.0f, -3.0f, 0.0f);
-        mario.marioBody.linearVelocity = new Vector2(0.0f, 0.0f);
-        mario.faceRightState = true;
-        mario.marioSprite.flipX = false;
+        marioMovement.ResetMario();
+        marioAnimator.ResetMario();
+
+        cameraController.ResetCamera();
 
         scoreText.text = "Score: 0";
         foreach (Transform eachChild in enemies.transform)
         {
-            var enemy = eachChild.GetComponent<EnemyMovement>();
-            enemy.moveRight = 1;
-            enemy.ComputeVelocity();
-
-            eachChild.transform.localPosition = enemy.startPosition;
+            eachChild.GetComponent<EnemyMovement>().ResetGoomba();
         }
         
-        jumpOverGoomba.score = 0;
-        mario.disable = false;
+        score = 0;
     }
 
-    public void RestartButtonCallback(int input)
+    public void RestartButtonCallback()
     {
         ResetGame();
         Time.timeScale = 1.0f;
@@ -46,20 +47,22 @@ public class GameManager : MonoBehaviour
     {
         scoreCanvas.SetActive(false);
         gameOverCanvas.SetActive(true);
-        gameOverScoreText.text = "Score: " + jumpOverGoomba.score.ToString();
+        gameOverScoreText.text = "Score: " + score.ToString();
+        marioAudio.PlayGameOverSound();
         Time.timeScale = 0.0f;
+    }
+
+    public void AddScore(int n)
+    {
+        score += n;
+        scoreText.text = "Score: " + score.ToString();
     }
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         scoreCanvas.SetActive(true);
         gameOverCanvas.SetActive(false);
         Time.timeScale = 1f;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

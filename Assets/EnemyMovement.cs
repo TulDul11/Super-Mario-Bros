@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    private Rigidbody2D enemyBody;
+    [Header("Movement")]
+    [SerializeField] float maxOffset = 5.0f;
+    [SerializeField] float enemyPatrolTime = 2.0f;
 
-    private float maxOffset = 5.0f;
-    private float enemyPatrolTime = 2.0f;
-    [System.NonSerialized] public int moveRight = 1;
-    [System.NonSerialized] public Vector3 startPosition = new(4.0f, -2.5f, 0.0f);
-
-    private float originalX;
-    private Vector2 velocity;
+    // Private
+    Rigidbody2D enemyBody;
+    float originalX;
+    Vector2 velocity;
+    int moveRight = 1;
+    Vector3 startPosition;
 
     public void ComputeVelocity()
     {
@@ -22,16 +23,20 @@ public class EnemyMovement : MonoBehaviour
         enemyBody.MovePosition(enemyBody.position + velocity * Time.fixedDeltaTime);
     }
 
-    void Start()
+    public void ResetGoomba()
     {
-        enemyBody = GetComponent<Rigidbody2D>();
-        originalX = transform.position.x;
+        moveRight = 1;
+        transform.position = startPosition;
+        originalX = startPosition.x;
         ComputeVelocity();
     }
 
-    void Update()
+    void Awake()
     {
-        
+        enemyBody = GetComponent<Rigidbody2D>();
+        startPosition = transform.position;
+        originalX = transform.position.x;
+        ComputeVelocity();
     }
 
     void FixedUpdate()
