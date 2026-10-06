@@ -34,8 +34,11 @@ public class QuestionBoxBehaviour : MonoBehaviour
 
     public void QuestionBoxReset()
     {
+        if (used)
+        {
+            boxAnimator.SetTrigger("used");
+        }
         used = false;
-        boxAnimator.SetTrigger("used");
     }
 
     void Awake()
