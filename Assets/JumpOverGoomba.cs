@@ -8,11 +8,19 @@ public class JumpOverGoomba : MonoBehaviour
     [SerializeField] GameManager gameManager;
     [SerializeField] Transform enemyLocation;
 
+    [Header("Settings")]
+    [SerializeField] bool working = true;
+
     // Private
     bool countScoreState = false;
 
     void FixedUpdate()
     {
+        if (!working)
+        {
+            return;
+        }
+        
         if (mario.IsGrounded())
         {
             countScoreState = true;

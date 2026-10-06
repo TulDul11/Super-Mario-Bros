@@ -1,68 +1,46 @@
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("References")]   
-    [SerializeField] PlayerMovement marioMovement;
-    [SerializeField] JumpOverGoomba jumpOverGoomba;
-    [SerializeField] PlayerAnimator marioAnimator;
-    [SerializeField] CameraController cameraController;
-    [SerializeField] PlayerAudio marioAudio;
-    [SerializeField] GameObject enemies;
-    [SerializeField] GameObject scoreCanvas;
-    [SerializeField] GameObject gameOverCanvas;
-    [SerializeField] TextMeshProUGUI scoreText;
-    [SerializeField] TextMeshProUGUI gameOverScoreText;
+    public UnityEvent gameStart;
+    public UnityEvent gameRestart;
+    public UnityEvent<int> scoreChange;
+    public UnityEvent gameOver;
     
     // Private
     int score = 0;
 
-    private void ResetGame()
+    void Start()
     {
-        scoreCanvas.SetActive(true);
-        gameOverCanvas.SetActive(false);
-
-        marioMovement.ResetMario();
-        marioAnimator.ResetMario();
-
-        cameraController.ResetCamera();
-
-        scoreText.text = "Score: 0";
-        foreach (Transform eachChild in enemies.transform)
-        {
-            eachChild.GetComponent<EnemyMovement>().ResetGoomba();
-        }
-        
-        score = 0;
-    }
-
-    public void RestartButtonCallback()
-    {
-        ResetGame();
+        Application.targetFrameRate = 60;
         Time.timeScale = 1.0f;
+        gameStart.Invoke();
     }
 
-    public void GameOver()
+    public void GameRestart()
     {
-        scoreCanvas.SetActive(false);
-        gameOverCanvas.SetActive(true);
-        gameOverScoreText.text = "Score: " + score.ToString();
-        marioAudio.PlayGameOverSound();
-        Time.timeScale = 0.0f;
+        score = 0;
+        SetScore(score);
+        gameRestart.Invoke();
+        Time.timeScale = 1.0f;
     }
 
     public void AddScore(int n)
     {
         score += n;
-        scoreText.text = "Score: " + score.ToString();
+        SetScore(score);
     }
 
-    void Start()
+    public void SetScore(int newScore)
     {
-        Application.targetFrameRate = 60;
-        scoreCanvas.SetActive(true);
-        gameOverCanvas.SetActive(false);
-        Time.timeScale = 1f;
+        scoreChange.Invoke(newScore);
+    }
+
+    public void GameOver()
+    {
+        Time.timeScale = 0.0f;
+        gameOver.Invoke();
     }
 }

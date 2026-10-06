@@ -30,6 +30,11 @@ public class BrickBehaviour : MonoBehaviour
         gameManager.AddScore(50);
     }
 
+    public void BrickReset()
+    {
+        used = false;
+    }
+
     void Awake()
     {
         brickBody = GetComponent<Rigidbody2D>();

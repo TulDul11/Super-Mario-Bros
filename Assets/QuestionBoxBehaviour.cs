@@ -32,6 +32,12 @@ public class QuestionBoxBehaviour : MonoBehaviour
         gameManager.AddScore(50);
     }
 
+    public void QuestionBoxReset()
+    {
+        used = false;
+        boxAnimator.SetTrigger("used");
+    }
+
     void Awake()
     {
         boxBody = GetComponent<Rigidbody2D>();
