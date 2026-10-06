@@ -3,21 +3,22 @@ using UnityEngine;
 public class PlayerAudio : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] AudioSource marioAudio;
-    [SerializeField] AudioClip marioDeath;
-    [SerializeField] AudioClip gameOver;
+    [SerializeField] AudioSource playerAudio;
+    [SerializeField] AudioSource deathAudio;
+    [SerializeField] AudioSource gameOverAudio;
 
     void PlayJumpSound()
     {
-        marioAudio.PlayOneShot(marioAudio.clip);
+        playerAudio.PlayOneShot(playerAudio.clip);
     }
 
     void PlayDeathSound()
     {
-        marioAudio.PlayOneShot(marioDeath);
+        deathAudio.PlayOneShot(deathAudio.clip);
     }
+
     public void PlayGameOverSound()
     {
-        marioAudio.PlayOneShot(gameOver);
+        gameOverAudio.PlayOneShot(gameOverAudio.clip);
     }
 }

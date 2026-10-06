@@ -25,6 +25,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Death")]
     [SerializeField] float deathImpulse = 20.0f;
 
+    [Header("Stomp")]
+    [SerializeField] float stompBounce = 10f;
+
     // Public (To other scripts)
     [NonSerialized] public bool faceRightState = true;
     [NonSerialized] public bool jumpPressed = false;
@@ -45,13 +48,25 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy") && alive)
+        if (!other.gameObject.CompareTag("Enemy") || !alive)
         {
-            marioBody.linearVelocity = new Vector2(0.0f, 0.0f);
-            playerAnimator.PlayDeath();
-            GetComponent<Collider2D>().enabled = false;
-            alive = false;
+            return;
         }
+
+        if (marioBody.linearVelocity.y <= 0 && transform.position.y > other.transform.position.y + 0.5f)
+        {
+            return;
+        }
+
+        Die();
+    }
+
+    void Die()
+    {
+        marioBody.linearVelocity = new Vector2(0.0f, 0.0f);
+        playerAnimator.PlayDeath();
+        GetComponent<Collider2D>().enabled = false;
+        alive = false;
     }
 
     void OnDrawGizmos()
@@ -97,7 +112,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Move(float value)
     {
-        if (Mathf.Abs(marioBody.linearVelocity.x) < maxSpeed)
+        bool sameDirection = Mathf.Sign(value) == Mathf.Sign(marioBody.linearVelocity.x);
+        bool atMaxSpeed = Mathf.Abs(marioBody.linearVelocity.x) >= maxSpeed;
+
+        if (!sameDirection || !atMaxSpeed)
             marioBody.AddForce(new Vector2(value, 0) * speed);
     }
     
@@ -122,6 +140,12 @@ public class PlayerMovement : MonoBehaviour
             marioBody.gravityScale = riseGravity * fallMultiplier;
         else
             marioBody.gravityScale = riseGravity;
+    }
+
+    public void StompBounce()
+    {
+        marioBody.linearVelocity = new Vector2(marioBody.linearVelocity.x, 0f);
+        marioBody.AddForce(Vector2.up * stompBounce, ForceMode2D.Impulse);
     }
 
     void Awake()
@@ -177,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Move(moveInput);
         }
-        else if (Mathf.Abs(marioBody.linearVelocity.x) < 1f)
+        else if (IsGrounded() && Mathf.Abs(marioBody.linearVelocity.x) < 4f)
         {
             Stop();
         }
