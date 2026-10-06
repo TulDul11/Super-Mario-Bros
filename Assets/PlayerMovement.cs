@@ -87,13 +87,11 @@ public class PlayerMovement : MonoBehaviour
         {
             faceRightState = true;
             isSkid = marioBody.linearVelocity.x < -0.1f && IsGrounded();
-            Debug.Log($"flip right, vx={marioBody.linearVelocity.x:F2}, grounded={IsGrounded()}, skid={isSkid}");
         }
         else if (value == -1 && faceRightState)
         {
             faceRightState = false;
             isSkid = marioBody.linearVelocity.x > 0.1f && IsGrounded();
-            Debug.Log($"flip right, vx={marioBody.linearVelocity.x:F2}, grounded={IsGrounded()}, skid={isSkid}");
         }
     }
 
