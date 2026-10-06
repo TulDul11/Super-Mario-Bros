@@ -32,9 +32,10 @@ public class PlayerMovement : MonoBehaviour
     [NonSerialized] public bool isSkid = false;
 
     // Private
-    private bool moveReleased = false;
     Rigidbody2D marioBody;
     Vector3 startPosition;
+    float moveInput;
+    bool holdingJump;
 
     public bool IsGrounded()
     {
@@ -80,10 +81,74 @@ public class PlayerMovement : MonoBehaviour
         gameManager.GameOver();
     }
 
+    void FlipMarioSprite(int value)
+    {
+        if (value == 1 && !faceRightState)
+        {
+            faceRightState = true;
+            isSkid = marioBody.linearVelocity.x < -0.1f && IsGrounded();
+            Debug.Log($"flip right, vx={marioBody.linearVelocity.x:F2}, grounded={IsGrounded()}, skid={isSkid}");
+        }
+        else if (value == -1 && faceRightState)
+        {
+            faceRightState = false;
+            isSkid = marioBody.linearVelocity.x > 0.1f && IsGrounded();
+            Debug.Log($"flip right, vx={marioBody.linearVelocity.x:F2}, grounded={IsGrounded()}, skid={isSkid}");
+        }
+    }
+
+    void Move(float value)
+    {
+        if (Mathf.Abs(marioBody.linearVelocity.x) < maxSpeed)
+            marioBody.AddForce(new Vector2(value, 0) * speed);
+    }
+    
+    void Stop()
+    {
+        marioBody.linearVelocity = new Vector2(0f, marioBody.linearVelocity.y);
+    }
+
+    void Jump()
+    {
+        marioBody.linearVelocity = new Vector2(marioBody.linearVelocity.x, 0f);
+        marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
+    }
+
+    void ApplyJumpGravity()
+    {
+        float velocityY = marioBody.linearVelocity.y;
+
+        if (velocityY > 0 && !holdingJump)
+            marioBody.gravityScale = riseGravity * lowJumpMultiplier;
+        else if (velocityY < 0)
+            marioBody.gravityScale = riseGravity * fallMultiplier;
+        else
+            marioBody.gravityScale = riseGravity;
+    }
+
     void Awake()
     {
         startPosition = transform.position;
         marioBody = GetComponent<Rigidbody2D>();
+    }
+
+    public void JumpAction()
+    {
+        if (alive && IsGrounded())
+        {
+            jumpPressed = true;
+            holdingJump = true;
+        }
+    }
+
+    public void JumpHoldAction(bool held)
+    {
+        holdingJump = held;
+    }
+
+    public void MoveAction(float value)
+    {
+        moveInput = value;
     }
 
     void Update()
@@ -93,21 +158,13 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.A) && faceRightState)
+        if (moveInput > 0.1f && !faceRightState)
         {
-            faceRightState = false;
-            isSkid = marioBody.linearVelocity.x > 0.1f && IsGrounded();
+            FlipMarioSprite(1);
         }
-
-        if (Input.GetKeyDown(KeyCode.D) && !faceRightState)
+        else if (moveInput < -0.1f && faceRightState)
         {
-            faceRightState = true;
-            isSkid = marioBody.linearVelocity.x < -0.1f && IsGrounded();
-        }
-
-        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
-        {
-            moveReleased = true;
+            FlipMarioSprite(-1);
         }
     }
 
@@ -118,44 +175,21 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
-        if (Mathf.Abs(moveHorizontal) > 0)
+        if (Mathf.Abs(moveInput) > 0.1f)
         {
-            Vector2 movement = new(moveHorizontal, 0);
-
-            if (Math.Abs(marioBody.linearVelocity.x) < maxSpeed)
-            {
-                marioBody.AddForce(movement*speed);
-            }
+            Move(moveInput);
         }
-
-        if (moveReleased)
+        else if (Mathf.Abs(marioBody.linearVelocity.x) < 1f)
         {
-            marioBody.linearVelocity = new Vector2(0f, marioBody.linearVelocity.y);
-            moveReleased = false;
-        }
-
-        if (Input.GetKey(KeyCode.Space) && IsGrounded())
-        {
-            jumpPressed = true;
+            Stop();
         }
 
         if (jumpPressed)
         {
-            marioBody.linearVelocity = new Vector2(marioBody.linearVelocity.x, 0f);
-            marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
+            Jump();
             jumpPressed = false;
         }
 
-        bool holdingJump = Input.GetKey(KeyCode.Space);
-        float velocityY = marioBody.linearVelocity.y;
-
-        if (velocityY > 0 && !holdingJump)
-            marioBody.gravityScale = riseGravity * lowJumpMultiplier;
-        else if (velocityY < 0)
-            marioBody.gravityScale = riseGravity * fallMultiplier;
-        else
-            marioBody.gravityScale = riseGravity;
-    
+        ApplyJumpGravity();
     }
 }

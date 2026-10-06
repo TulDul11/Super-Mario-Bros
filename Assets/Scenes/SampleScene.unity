@@ -3691,7 +3691,7 @@ MonoBehaviour:
   upSpeed: 16
   riseGravity: 3
   fallMultiplier: 1.8
-  lowJumpMultiplier: 2.5
+  lowJumpMultiplier: 10
   boxSize: {x: 0.75, y: 0.15}
   maxDistance: 0.6
   layerMask:
