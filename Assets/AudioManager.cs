@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 { 
     [Header("References")]
     [SerializeField] AudioMixer mixer;
@@ -10,8 +10,10 @@ public class AudioManager : MonoBehaviour
     AudioMixerSnapshot normal;
     AudioMixerSnapshot gameOver;
 
-    void Awake()
+    public override void Awake()
     {
+        base.Awake();
+        
         normal = mixer.FindSnapshot("Snapshot");
         gameOver = mixer.FindSnapshot("GameOver");
     }

@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class BrickBehaviour : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] GameManager gameManager;
-
     [Header("Spring Physics")]
     [SerializeField] float bounceForce = 10f;
 
@@ -27,7 +24,7 @@ public class BrickBehaviour : MonoBehaviour
         GameObject coin = Instantiate(coinPrefab, coinSpawnPoint.position, Quaternion.identity);
         coin.GetComponent<Rigidbody2D>().AddForce(Vector2.up * coinImpulse, ForceMode2D.Impulse);
         brickAudio.PlayOneShot(coinSound);
-        gameManager.AddScore(50);
+        GameManager.instance.AddScore(50);
     }
 
     public void BrickReset()

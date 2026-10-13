@@ -10,10 +10,6 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] float maxOffset = 5.0f;
     [SerializeField] float enemyPatrolTime = 2.0f;
 
-    [Header("Stomp")]
-    [SerializeField] UnityEvent<int> onStomped;
-    [SerializeField] int scoreValue = 100;
-
 
     // Private
     Rigidbody2D enemyBody;
@@ -62,7 +58,9 @@ public class EnemyMovement : MonoBehaviour
             col.enabled = false;
 
         stomped = true;
-        onStomped.Invoke(scoreValue);
+
+        GameManager.instance.AddScore(100);
+
         goombaAnimator.SetTrigger("stomped");
         enabled = false;
         Invoke(nameof(Hide), 0.5f);

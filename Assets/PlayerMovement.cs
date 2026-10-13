@@ -1,7 +1,8 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Singleton<PlayerMovement>
 {
     [Header("References")]
     [SerializeField] GameManager gameManager;
@@ -148,12 +149,6 @@ public class PlayerMovement : MonoBehaviour
         marioBody.AddForce(Vector2.up * stompBounce, ForceMode2D.Impulse);
     }
 
-    void Awake()
-    {
-        startPosition = transform.position;
-        marioBody = GetComponent<Rigidbody2D>();
-    }
-
     public void JumpAction()
     {
         if (alive && IsGrounded())
@@ -171,6 +166,30 @@ public class PlayerMovement : MonoBehaviour
     public void MoveAction(float value)
     {
         moveInput = value;
+    }
+
+    public void SetStartingPosition(Scene current, Scene next)
+    {
+        transform.position = startPosition;
+        marioBody.linearVelocity = Vector2.zero;
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.activeSceneChanged -= SetStartingPosition;
+    }
+
+    public override void Awake()
+    {
+        base.Awake();
+        
+        startPosition = transform.position;
+        marioBody = GetComponent<Rigidbody2D>();
+    }
+
+    void Start()
+    {
+        SceneManager.activeSceneChanged += SetStartingPosition;
     }
 
     void Update()

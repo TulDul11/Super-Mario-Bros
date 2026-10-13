@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class QuestionBoxBehaviour : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] GameManager gameManager;
-
     [Header("Animation")]
     [SerializeField] Animator boxAnimator;
 
@@ -29,7 +26,7 @@ public class QuestionBoxBehaviour : MonoBehaviour
         GameObject coin = Instantiate(coinPrefab, coinSpawnPoint.position, Quaternion.identity);
         coin.GetComponent<Rigidbody2D>().AddForce(Vector2.up * coinImpulse, ForceMode2D.Impulse);
         boxAudio.PlayOneShot(coinSound);
-        gameManager.AddScore(50);
+        GameManager.instance.AddScore(50);
     }
 
     public void QuestionBoxReset()

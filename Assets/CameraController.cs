@@ -4,7 +4,6 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] Transform player;
     [SerializeField] Transform endLimit;
     
     // Private
@@ -13,10 +12,19 @@ public class CameraController : MonoBehaviour
     float endX;
     float viewportHalfwidth;
     Vector3 startPosition;
+    Transform player;
 
     public void ResetCamera()
     {
         transform.position = startPosition;
+    }
+
+    void OnDestroy()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.gameRestart.RemoveListener(ResetCamera);
+        }
     }
 
     void Awake()
@@ -26,6 +34,10 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        GameManager.instance.gameRestart.AddListener(ResetCamera);
+
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        
         Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0));
         viewportHalfwidth = Math.Abs(bottomLeft.x - this.transform.position.x);
         offset = this.transform.position.x - player.position.x;
