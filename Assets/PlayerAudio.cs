@@ -4,8 +4,6 @@ public class PlayerAudio : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] AudioSource playerAudio;
-    [SerializeField] AudioSource deathAudio;
-    [SerializeField] AudioSource gameOverAudio;
 
     void PlayJumpSound()
     {
@@ -14,11 +12,24 @@ public class PlayerAudio : MonoBehaviour
 
     void PlayDeathSound()
     {
-        deathAudio.PlayOneShot(deathAudio.clip);
+        AudioManager.instance.PlayDeathSound();
     }
 
     public void PlayGameOverSound()
     {
-        gameOverAudio.PlayOneShot(gameOverAudio.clip);
+        AudioManager.instance.PlayGameOverSound();
+    }
+
+    void OnDestroy()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.gameOver.RemoveListener(PlayGameOverSound);
+        }
+    }
+
+    void Start()
+    {
+        GameManager.instance.gameOver.AddListener(PlayGameOverSound);
     }
 }

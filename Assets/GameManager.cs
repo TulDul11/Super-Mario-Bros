@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
-using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -8,7 +8,9 @@ public class GameManager : Singleton<GameManager>
     public UnityEvent gameRestart;
     public UnityEvent<int> scoreChange;
     public UnityEvent gameOver;
-    
+
+    public int CurrentScore => score;
+
     // Private
     int score = 0;
 
@@ -17,6 +19,7 @@ public class GameManager : Singleton<GameManager>
         Application.targetFrameRate = 60;
         Time.timeScale = 1.0f;
         gameStart.Invoke();
+        SceneManager.activeSceneChanged += SceneSetup;
     }
 
     public void GameRestart()
@@ -42,5 +45,16 @@ public class GameManager : Singleton<GameManager>
     {
         Time.timeScale = 0.0f;
         gameOver.Invoke();
+    }
+
+    public void SceneSetup(Scene current, Scene next)
+    {
+        gameStart.Invoke();
+        SetScore(score);
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.activeSceneChanged -= SceneSetup;
     }
 }

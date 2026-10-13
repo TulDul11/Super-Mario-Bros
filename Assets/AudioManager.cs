@@ -6,6 +6,10 @@ public class AudioManager : Singleton<AudioManager>
     [Header("References")]
     [SerializeField] AudioMixer mixer;
 
+    [Header("SFX")]
+    [SerializeField] AudioSource deathAudio;
+    [SerializeField] AudioSource gameOverAudio; 
+
     // Private
     AudioMixerSnapshot normal;
     AudioMixerSnapshot gameOver;
@@ -26,5 +30,15 @@ public class AudioManager : Singleton<AudioManager>
     public void GameRestart()
     {
         normal.TransitionTo(0f);
+    }
+
+    public void PlayDeathSound()
+    {
+        deathAudio.Play();
+    }
+
+    public void PlayGameOverSound()
+    {
+        gameOverAudio.Play();
     }
 }

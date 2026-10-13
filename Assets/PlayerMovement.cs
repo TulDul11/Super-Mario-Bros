@@ -1,11 +1,9 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System;
 
-public class PlayerMovement : Singleton<PlayerMovement>
+public class PlayerMovement : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] GameManager gameManager;
     [SerializeField] PlayerAnimator playerAnimator;
 
     [Header("Movement")]
@@ -94,7 +92,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
 
     void GameOverScene()
     {
-        gameManager.GameOver();
+        GameManager.instance.GameOver();
     }
 
     void FlipMarioSprite(int value)
@@ -168,28 +166,23 @@ public class PlayerMovement : Singleton<PlayerMovement>
         moveInput = value;
     }
 
-    public void SetStartingPosition(Scene current, Scene next)
-    {
-        transform.position = startPosition;
-        marioBody.linearVelocity = Vector2.zero;
-    }
-
     void OnDestroy()
     {
-        SceneManager.activeSceneChanged -= SetStartingPosition;
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.gameRestart.RemoveListener(ResetMario);
+        }
     }
 
-    public override void Awake()
+    void Awake()
     {
-        base.Awake();
-        
         startPosition = transform.position;
         marioBody = GetComponent<Rigidbody2D>();
     }
 
     void Start()
     {
-        SceneManager.activeSceneChanged += SetStartingPosition;
+        GameManager.instance.gameRestart.AddListener(ResetMario);
     }
 
     void Update()

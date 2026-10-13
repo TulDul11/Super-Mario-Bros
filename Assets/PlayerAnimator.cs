@@ -21,6 +21,14 @@ public class PlayerAnimator : MonoBehaviour
         marioAnimator.Play("mario-die");
     }
 
+    void OnDestroy()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.gameRestart.RemoveListener(ResetMario);
+        }
+    }
+
     void Awake()
     {
         marioSprite = GetComponent<SpriteRenderer>();
@@ -28,6 +36,7 @@ public class PlayerAnimator : MonoBehaviour
 
     void Start()
     {
+        GameManager.instance.gameRestart.AddListener(ResetMario);
         marioBody = marioMovement.GetComponent<Rigidbody2D>();
     }
 
