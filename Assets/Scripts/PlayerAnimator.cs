@@ -66,6 +66,11 @@ public class PlayerAnimator : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0f)
+        {
+            return;
+        }
+        
         bool grounded = marioMovement.IsGrounded();
         marioSprite.flipX = !marioMovement.faceRightState;
 

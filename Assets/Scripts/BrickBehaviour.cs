@@ -22,9 +22,8 @@ public class BrickBehaviour : MonoBehaviour
     void SpawnCoin()
     {
         GameObject coin = Instantiate(coinPrefab, coinSpawnPoint.position, Quaternion.identity);
-        coin.GetComponent<Rigidbody2D>().AddForce(Vector2.up * coinImpulse, ForceMode2D.Impulse);
+        coin.GetComponent<CoinBehaviour>().SpawnPowerUp();
         brickAudio.PlayOneShot(coinSound);
-        GameManager.instance.AddScore(50);
     }
 
     public void BrickReset()

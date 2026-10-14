@@ -47,4 +47,14 @@ public class AudioManager : Singleton<AudioManager>
     {
         PowerUpAudio.Play();
     }
+
+    public void PauseGame()
+    {
+        gameOver.TransitionTo(0f);
+    }
+
+    public void UnPauseGame()
+    {
+        normal.TransitionTo(0f);
+    }
 }

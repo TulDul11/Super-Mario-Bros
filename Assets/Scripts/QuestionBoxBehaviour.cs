@@ -29,9 +29,8 @@ public class QuestionBoxBehaviour : MonoBehaviour
     void SpawnCoin()
     {
         GameObject coin = Instantiate(coinPrefab, coinSpawnPoint.position, Quaternion.identity);
-        coin.GetComponent<Rigidbody2D>().AddForce(Vector2.up * coinImpulse, ForceMode2D.Impulse);
+        coin.GetComponent<CoinBehaviour>().SpawnPowerUp();
         boxAudio.PlayOneShot(coinSound);
-        GameManager.instance.AddScore(50);
     }
 
     void SpawnMushroom()

@@ -268,6 +268,11 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        if (Time.timeScale == 0f)
+        {
+            return;
+        }
+
         if (moveInput > 0.1f && !faceRightState)
         {
             FlipMarioSprite(1);

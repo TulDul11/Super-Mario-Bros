@@ -1,12 +1,14 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 
-public class MagicMushroomPowerUp : BasePowerup
+public class MagicMushroomPowerUp : BasePowerUp
 {
     [Header("Movement")]
     [SerializeField] float moveForce = 3f;
     [SerializeField] float emergeForce = 2f;
+    [SerializeField] float emergeDistance = 1f;
+    [SerializeField] float emergeTime = 0.5f;
+    [SerializeField] int normalSortingOrder = 0;
 
     protected override void Awake()
     {
@@ -34,16 +36,27 @@ public class MagicMushroomPowerUp : BasePowerup
 
     public override void SpawnPowerUp()
     {
-        GetComponent<Collider2D>().enabled = false;
-        rigidBody.AddForce(Vector2.up * emergeForce, ForceMode2D.Impulse);
-        Invoke(nameof(StartMoving), 0.4f);
+        StartCoroutine(SpawnSequence());
     }
 
-    void StartMoving()
+    IEnumerator SpawnSequence()
     {
+        Vector3 start = transform.position;
+        Vector3 end = start + Vector3.up * emergeDistance;
+
+        for (float t = 0f; t < emergeTime; t += Time.deltaTime)
+        {
+            transform.position = Vector3.Lerp(start, end, t / emergeTime);
+            yield return null;
+        }
+        transform.position = end;
+
+        GetComponent<SpriteRenderer>().sortingOrder = normalSortingOrder;
+        rigidBody.bodyType = RigidbodyType2D.Dynamic;
+        yield return new WaitForFixedUpdate();
+
         GetComponent<Collider2D>().enabled = true;
         spawned = true;
-        rigidBody.linearVelocity = Vector2.zero;
     }
 
     public override void ApplyPowerUp(MonoBehaviour i)

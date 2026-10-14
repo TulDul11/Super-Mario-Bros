@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class BasePowerup : MonoBehaviour, IPowerUp
+public abstract class BasePowerUp : MonoBehaviour, IPowerUp
 {
     public PowerUpType type;
     public bool spawned = false;
