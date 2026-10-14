@@ -27,17 +27,30 @@ public class PlayerMovement : MonoBehaviour
     [Header("Stomp")]
     [SerializeField] float stompBounce = 10f;
 
+    [Header("Super Mario")]
+    [SerializeField] Sprite smallSprite;
+    [SerializeField] Sprite superSprite;
+    [SerializeField] Vector2 smallColliderSize;
+    [SerializeField] Vector2 smallColliderOffset;
+    [SerializeField] Vector2 superColliderSize;
+    [SerializeField] Vector2 superColliderOffset;
+    [SerializeField] float invulnerableTime = 1.5f;
+
     // Public (To other scripts)
     [NonSerialized] public bool faceRightState = true;
     [NonSerialized] public bool jumpPressed = false;
     [NonSerialized] public bool alive = true;
     [NonSerialized] public bool isSkid = false;
+    [NonSerialized] public bool isSuper = false;
 
     // Private
     Rigidbody2D marioBody;
     Vector3 startPosition;
     float moveInput;
     bool holdingJump;
+    float invulnerableUntil = 0f;
+    SpriteRenderer marioSprite;
+    BoxCollider2D marioCollider;
 
     public bool IsGrounded()
     {
@@ -52,8 +65,19 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        if (Time.time < invulnerableUntil)
+        {
+            return;
+        }
+
         if (marioBody.linearVelocity.y <= 0 && transform.position.y > other.transform.position.y + 0.5f)
         {
+            return;
+        }
+
+        if (isSuper)
+        {
+            Shrink();
             return;
         }
 
@@ -78,9 +102,12 @@ public class PlayerMovement : MonoBehaviour
     public void ResetMario()
     {
         transform.position = startPosition;
-        marioBody.linearVelocity = new Vector2(0.0f, 0.0f);
+        marioBody.linearVelocity = Vector2.zero;
         faceRightState = true;
         alive = true;
+        invulnerableUntil = 0f;
+        SetSmallForm();
+        playerAnimator.SetSuperAnimatorInstant(false);
         GetComponent<Collider2D>().enabled = true;
     }
 
@@ -166,6 +193,35 @@ public class PlayerMovement : MonoBehaviour
         moveInput = value;
     }
 
+    public void MakeSuper()
+    {
+        if (isSuper)
+        {
+            return;
+        }
+
+        isSuper = true;
+        marioSprite.sprite = superSprite;
+        marioCollider.size = superColliderSize;
+        marioCollider.offset = superColliderOffset;
+        playerAnimator.SetSuperAnimator(true);
+    }
+
+    void SetSmallForm()
+    {
+        isSuper = false;
+        marioSprite.sprite = smallSprite;
+        marioCollider.size = smallColliderSize;
+        marioCollider.offset = smallColliderOffset;
+    }
+
+    public void Shrink()
+    {
+        SetSmallForm();
+        invulnerableUntil = Time.time + invulnerableTime;
+        playerAnimator.SetSuperAnimator(false);
+    }
+
     void OnDestroy()
     {
         if (GameManager.instance != null)
@@ -178,11 +234,13 @@ public class PlayerMovement : MonoBehaviour
     {
         startPosition = transform.position;
         marioBody = GetComponent<Rigidbody2D>();
+        marioSprite = GetComponentInChildren<SpriteRenderer>();
+        marioCollider = GetComponent<BoxCollider2D>();
     }
 
     void Start()
     {
-        GameManager.instance.gameRestart.AddListener(ResetMario);
+        GameManager.instance.gameRestart.AddListener(ResetMario);      
     }
 
     void Update()

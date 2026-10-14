@@ -16,6 +16,11 @@ public class QuestionBoxBehaviour : MonoBehaviour
     [Header("Audio")]
     [SerializeField] AudioSource boxAudio;
     [SerializeField] AudioClip coinSound;
+    [SerializeField] AudioClip powerUpSound;
+
+    [Header("Mushrooms")]
+    [SerializeField] bool spawnsMushroom;
+    [SerializeField] GameObject mushroomPrefab;
 
     // Private
     Rigidbody2D boxBody;
@@ -27,6 +32,13 @@ public class QuestionBoxBehaviour : MonoBehaviour
         coin.GetComponent<Rigidbody2D>().AddForce(Vector2.up * coinImpulse, ForceMode2D.Impulse);
         boxAudio.PlayOneShot(coinSound);
         GameManager.instance.AddScore(50);
+    }
+
+    void SpawnMushroom()
+    {
+        GameObject m = Instantiate(mushroomPrefab, coinSpawnPoint.position, Quaternion.identity);
+        m.GetComponent<MagicMushroomPowerUp>().SpawnPowerUp();
+        boxAudio.PlayOneShot(powerUpSound);
     }
 
     public void QuestionBoxReset()
@@ -51,7 +63,12 @@ public class QuestionBoxBehaviour : MonoBehaviour
         }
 
         boxBody.AddForce(Vector2.up * bounceForce, ForceMode2D.Impulse);
-        SpawnCoin();
+
+        if (spawnsMushroom)
+            SpawnMushroom();
+        else
+            SpawnCoin();
+
         boxAnimator.SetTrigger("used");
         used = true;
     }

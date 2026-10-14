@@ -8,6 +8,11 @@ public class QuestionBoxManager : MonoBehaviour
         {
             questionBox.QuestionBoxReset();
         }
+
+        foreach (GameObject p in GameObject.FindGameObjectsWithTag("PowerUp"))
+        {
+            Destroy(p);
+        }
     }
 
     void OnDestroy()
