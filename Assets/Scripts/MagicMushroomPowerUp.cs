@@ -48,6 +48,7 @@ public class MagicMushroomPowerUp : BasePowerup
 
     public override void ApplyPowerUp(MonoBehaviour i)
     {
+        AudioManager.instance.PlayPowerUpSound();
         GameManager.instance.AddScore(200);
         if (i is PlayerMovement mario)
         {

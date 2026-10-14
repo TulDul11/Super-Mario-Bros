@@ -4,18 +4,21 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
+    // Events
     public UnityEvent gameStart;
     public UnityEvent gameRestart;
     public UnityEvent<int> scoreChange;
     public UnityEvent gameOver;
 
-    public int CurrentScore => score;
 
-    // Private
-    int score = 0;
+    public IntVariable gameScore;
+    public int CurrentScore => gameScore.Value;
+    public bool marioIsSuper = false;
+    
 
     void Start()
     {
+        gameScore.Value = 0;
         Application.targetFrameRate = 60;
         Time.timeScale = 1.0f;
         gameStart.Invoke();
@@ -24,16 +27,16 @@ public class GameManager : Singleton<GameManager>
 
     public void GameRestart()
     {
-        score = 0;
-        SetScore(score);
+        gameScore.Value = 0;
+        SetScore(gameScore.Value);
         gameRestart.Invoke();
         Time.timeScale = 1.0f;
     }
 
     public void AddScore(int n)
     {
-        score += n;
-        SetScore(score);
+        gameScore.ApplyChange(n);
+        SetScore(gameScore.Value);
     }
 
     public void SetScore(int newScore)
@@ -50,7 +53,6 @@ public class GameManager : Singleton<GameManager>
     public void SceneSetup(Scene current, Scene next)
     {
         gameStart.Invoke();
-        SetScore(score);
     }
 
     void OnDestroy()

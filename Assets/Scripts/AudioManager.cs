@@ -9,6 +9,7 @@ public class AudioManager : Singleton<AudioManager>
     [Header("SFX")]
     [SerializeField] AudioSource deathAudio;
     [SerializeField] AudioSource gameOverAudio; 
+    [SerializeField] AudioSource PowerUpAudio;
 
     // Private
     AudioMixerSnapshot normal;
@@ -40,5 +41,10 @@ public class AudioManager : Singleton<AudioManager>
     public void PlayGameOverSound()
     {
         gameOverAudio.Play();
+    }
+
+    public void PlayPowerUpSound()
+    {
+        PowerUpAudio.Play();
     }
 }

@@ -5,24 +5,12 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] PlayerAnimator playerAnimator;
-
-    [Header("Movement")]
-    [SerializeField] float speed = 150.0f;
-    [SerializeField] float maxSpeed = 5.0f;
-
-    [Header("Jump")]
-    [SerializeField] public float upSpeed = 15.0f;
-    [SerializeField] float riseGravity = 3.0f;
-    [SerializeField] float fallMultiplier = 1.8f;
-    [SerializeField] float lowJumpMultiplier = 2.5f;
+    [SerializeField] GameConstants gameConstants;
 
     [Header("Box Cast")]
     [SerializeField] Vector2 boxSize;
     [SerializeField] float maxDistance;
     [SerializeField] LayerMask layerMask;
-
-    [Header("Death")]
-    [SerializeField] float deathImpulse = 20.0f;
 
     [Header("Stomp")]
     [SerializeField] float stompBounce = 10f;
@@ -51,6 +39,13 @@ public class PlayerMovement : MonoBehaviour
     float invulnerableUntil = 0f;
     SpriteRenderer marioSprite;
     BoxCollider2D marioCollider;
+    float speed;
+    float maxSpeed;
+    float deathImpulse;
+    float upSpeed;
+    float riseGravity;
+    float fallMultiplier;
+    float lowJumpMultiplier;
 
     public bool IsGrounded()
     {
@@ -201,15 +196,25 @@ public class PlayerMovement : MonoBehaviour
         }
 
         isSuper = true;
+        GameManager.instance.marioIsSuper = true;
         marioSprite.sprite = superSprite;
         marioCollider.size = superColliderSize;
         marioCollider.offset = superColliderOffset;
         playerAnimator.SetSuperAnimator(true);
     }
 
+    void MakeSuperInstant()
+    {
+        isSuper = true;
+        marioCollider.size = superColliderSize;
+        marioCollider.offset = superColliderOffset;
+        playerAnimator.SetSuperAnimatorInstant(true);
+    }
+
     void SetSmallForm()
     {
         isSuper = false;
+        GameManager.instance.marioIsSuper = false;
         marioSprite.sprite = smallSprite;
         marioCollider.size = smallColliderSize;
         marioCollider.offset = smallColliderOffset;
@@ -236,11 +241,24 @@ public class PlayerMovement : MonoBehaviour
         marioBody = GetComponent<Rigidbody2D>();
         marioSprite = GetComponentInChildren<SpriteRenderer>();
         marioCollider = GetComponent<BoxCollider2D>();
+        
+        speed = gameConstants.speed;
+        maxSpeed = gameConstants.maxSpeed;
+        upSpeed = gameConstants.upSpeed;
+        deathImpulse = gameConstants.deathImpulse;
+        riseGravity = gameConstants.riseGravity;
+        fallMultiplier = gameConstants.fallMultiplier;
+        lowJumpMultiplier = gameConstants.lowJumpMultiplier;
     }
 
     void Start()
     {
-        GameManager.instance.gameRestart.AddListener(ResetMario);      
+        GameManager.instance.gameRestart.AddListener(ResetMario);
+
+        if (GameManager.instance.marioIsSuper)
+        {
+            MakeSuperInstant();
+        }
     }
 
     void Update()

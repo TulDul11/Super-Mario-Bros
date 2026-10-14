@@ -10,6 +10,11 @@ public class HUDManager : MonoBehaviour
     [Header("Text")]
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI gameOverScoreText;
+    [SerializeField] GameObject highScoreText;
+    [SerializeField] TextMeshProUGUI highScoreGameOverText;
+
+    // Public
+    public IntVariable gameScore;
 
     // Private
     int currentScore = 0;
@@ -18,6 +23,8 @@ public class HUDManager : MonoBehaviour
     {
         scoreCanvas.SetActive(true);
         gameOverCanvas.SetActive(false);
+
+        UpdateHighscore();
     }
 
     public void GameRestart()
@@ -29,14 +36,29 @@ public class HUDManager : MonoBehaviour
     public void SetScore(int score)
     {
         currentScore = score;
-        scoreText.text = "Score: " + score.ToString();
+        scoreText.text = "SCORE " + score.ToString("D6");
     }
 
     public void GameOver()
     {
         scoreCanvas.SetActive(false);
         gameOverCanvas.SetActive(true);
-        gameOverScoreText.text = "Score: " + currentScore.ToString();
+        gameOverScoreText.text = "SCORE " + currentScore.ToString("D6");
+
+        UpdateHighscore();
+
+        highScoreGameOverText.text = "HIGHSCORE " + gameScore.previousHighestValue.ToString("D6");
+    }
+
+    void UpdateHighscore()
+    {
+        bool hasHighscore = gameScore.previousHighestValue > 0;
+        highScoreText.SetActive(hasHighscore);
+
+        if (hasHighscore)
+        {
+            highScoreText.GetComponent<TextMeshProUGUI>().text = "HIGHSCORE " + gameScore.previousHighestValue.ToString("D6");
+        }
     }
 
     void OnDestroy()

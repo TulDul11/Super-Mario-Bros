@@ -5,11 +5,7 @@ public class EnemyMovement : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] Animator goombaAnimator;
-    
-    [Header("Movement")]
-    [SerializeField] float maxOffset = 5.0f;
-    [SerializeField] float enemyPatrolTime = 2.0f;
-
+    [SerializeField] GameConstants gameConstants;
 
     // Private
     Rigidbody2D enemyBody;
@@ -18,6 +14,8 @@ public class EnemyMovement : MonoBehaviour
     int moveRight = 1;
     Vector3 startPosition;
     bool stomped = false;
+    float maxOffset;
+    float enemyPatrolTime;
 
     public void ComputeVelocity()
     {
@@ -74,6 +72,8 @@ public class EnemyMovement : MonoBehaviour
 
     void Awake()
     {
+        maxOffset = gameConstants.goombaMaxOffset;
+        enemyPatrolTime = gameConstants.goombaPatrolTime;
         enemyBody = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
         originalX = transform.position.x;
