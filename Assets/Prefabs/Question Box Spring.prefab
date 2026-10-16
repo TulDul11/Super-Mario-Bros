@@ -84,7 +84,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300160, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -178,7 +178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96b498dd45bfd8a4a807c7d809c01919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  gameManager: {fileID: 0}
   boxAnimator: {fileID: 6594403107047610440}
   bounceForce: 10
   coinPrefab: {fileID: 0}
@@ -186,6 +185,9 @@ MonoBehaviour:
   coinSpawnPoint: {fileID: 0}
   boxAudio: {fileID: 0}
   coinSound: {fileID: 0}
+  powerUpSound: {fileID: 0}
+  spawnsMushroom: 0
+  mushroomPrefab: {fileID: 0}
 --- !u!61 &1429786020762403445
 BoxCollider2D:
   m_ObjectHideFlags: 0
