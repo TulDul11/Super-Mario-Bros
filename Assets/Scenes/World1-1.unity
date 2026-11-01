@@ -5603,6 +5603,8 @@ GameObject:
   - component: {fileID: 1876254890}
   - component: {fileID: 1876254891}
   - component: {fileID: 1876254892}
+  - component: {fileID: 1876254894}
+  - component: {fileID: 1876254893}
   m_Layer: 0
   m_Name: Mario
   m_TagString: Player
@@ -5669,6 +5671,11 @@ MonoBehaviour:
   gameConstants: {fileID: 11400000, guid: 79cbffdc86b609443b41f32605289fa8, type: 2}
   onGameOver: {fileID: 11400000, guid: dece956df8033294681c4f9d0ca29786, type: 2}
   marioIsSuper: {fileID: 11400000, guid: 4e98ab17fb98d104683c63a9af7e3f93, type: 2}
+  marioIsDead: {fileID: 11400000, guid: bc1a900786018d04ca984cb2be03aaf5, type: 2}
+  marioHit: {fileID: 11400000, guid: a1eba7faad4f4c247b47dbee9b0a6268, type: 2}
+  marioIsInvincible: {fileID: 11400000, guid: 4acf793558954904a8e9e310def0415e, type: 2}
+  marioState: {fileID: 1876254894}
+  buffState: {fileID: 1876254893}
   boxSize: {x: 0.75, y: 0.15}
   maxDistance: 0.6
   layerMask:
@@ -5681,7 +5688,6 @@ MonoBehaviour:
   smallColliderOffset: {x: 0, y: 0}
   superColliderSize: {x: 0.85, y: 2}
   superColliderOffset: {x: 0, y: 0.5}
-  invulnerableTime: 1.5
 --- !u!61 &1876254882
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6076,6 +6082,46 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   simpleEvent: {fileID: 11400000, guid: dece956df8033294681c4f9d0ca29786, type: 2}
+--- !u!114 &1876254893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876254877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9942751ce8a8134192dd7325d27a8e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuffStateController
+  startState: {fileID: 11400000, guid: a35b3ccea45f73f4b8beca92b82bc9c5, type: 2}
+  remainState: {fileID: 11400000, guid: 94b6c4036581456429bbd2e74a3f68d8, type: 2}
+  currentState: {fileID: 0}
+  player: {fileID: 1876254881}
+  stateAudio: {fileID: 1876254886}
+  marioIsSuper: {fileID: 11400000, guid: 4e98ab17fb98d104683c63a9af7e3f93, type: 2}
+  animator: {fileID: 1601902949}
+  stateTimeElapsed: 0
+--- !u!114 &1876254894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876254877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42b6ca008571f54faa6509ddbd9a20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StateController
+  startState: {fileID: 11400000, guid: 3bd30be9604f6444eae774b0283f3a95, type: 2}
+  remainState: {fileID: 11400000, guid: 94b6c4036581456429bbd2e74a3f68d8, type: 2}
+  currentState: {fileID: 0}
+  player: {fileID: 1876254881}
+  stateAudio: {fileID: 1876254886}
+  marioIsSuper: {fileID: 11400000, guid: 4e98ab17fb98d104683c63a9af7e3f93, type: 2}
+  animator: {fileID: 1601902949}
+  stateTimeElapsed: 0
 --- !u!1 &1910617913
 GameObject:
   m_ObjectHideFlags: 0

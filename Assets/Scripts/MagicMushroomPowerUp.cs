@@ -1,8 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using UnityEditor.Search;
 
 public class MagicMushroomPowerUp : BasePowerUp
 {
+    [Header("References")]
+    [SerializeField] BoolVariable marioIsSuper;
+
     [Header("Movement")]
     [SerializeField] float moveForce = 3f;
     [SerializeField] float emergeForce = 2f;
@@ -72,7 +76,7 @@ public class MagicMushroomPowerUp : BasePowerUp
         AddScore(scoreValue);
         if (i is PlayerMovement mario)
         {
-            mario.MakeSuper();
+            marioIsSuper.Value = true;
         }
     }
 

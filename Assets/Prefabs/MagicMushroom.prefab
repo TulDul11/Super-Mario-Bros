@@ -183,6 +183,7 @@ MonoBehaviour:
   onScoreChanged: {fileID: 11400000, guid: 681de350e5667ba4e97e658d4db17784, type: 2}
   type: 1
   spawned: 0
+  marioIsSuper: {fileID: 11400000, guid: 4e98ab17fb98d104683c63a9af7e3f93, type: 2}
   moveForce: 3
   emergeForce: 2
   emergeDistance: 1
