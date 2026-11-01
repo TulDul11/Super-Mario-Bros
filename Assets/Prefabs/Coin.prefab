@@ -155,4 +155,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1934b3bf34a7ba48b4ca6be4ccb750c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  gameScore: {fileID: 11400000, guid: c3d47ba0e4ef89e45a381544e30db1fc, type: 2}
+  onScoreChanged: {fileID: 11400000, guid: 681de350e5667ba4e97e658d4db17784, type: 2}
+  type: 0
+  spawned: 0
   lifetime: 1.5
+  coinImpulse: 8
+  scoreValue: 50

@@ -4,6 +4,7 @@ public class PauseController : MonoBehaviour
 {
     [Header("Pause Canvas")]
     [SerializeField] GameObject pausePanel;
+    [SerializeField] AudioManager audioManager;
 
     // Private
     bool isPaused;
@@ -16,11 +17,11 @@ public class PauseController : MonoBehaviour
 
         if (isPaused)
         {
-            AudioManager.instance.PauseGame();
+            audioManager.PauseGame();
         }
         else
         {
-            AudioManager.instance.UnPauseGame();
+            audioManager.UnPauseGame();
         }
     }
 }

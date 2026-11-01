@@ -24,6 +24,6 @@ public class CoinBehaviour : BasePowerUp
 
     public override void ApplyPowerUp(MonoBehaviour i)
     {
-        GameManager.instance.AddScore(scoreValue);
+        AddScore(scoreValue);
     }
 }

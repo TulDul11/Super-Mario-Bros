@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34beb07e0710af49ba4173e6e092285, type: 3}
+  m_Name: Invincible
+  m_EditorClassIdentifier: Assembly-CSharp::State
+  enterActions:
+  - {fileID: 11400000, guid: c712e72e9fcfb4c4192ee20a95e89adc, type: 2}
+  - {fileID: 11400000, guid: 85cce27f36e2e8241b43f6c7bd0cb2c3, type: 2}
+  - {fileID: 11400000, guid: 96a282ef5e425fa4888079f3c644ec15, type: 2}
+  updateActions: []
+  transitions:
+  - decision: {fileID: 11400000, guid: ce4a2d4dd29296942ae5a9864d007859, type: 2}
+    trueState: {fileID: 11400000, guid: a35b3ccea45f73f4b8beca92b82bc9c5, type: 2}
+    falseState: {fileID: 11400000, guid: 94b6c4036581456429bbd2e74a3f68d8, type: 2}
+  enterSFX: {fileID: 0}

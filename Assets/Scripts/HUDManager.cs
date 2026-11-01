@@ -29,6 +29,8 @@ public class HUDManager : MonoBehaviour
 
     public void GameRestart()
     {
+        gameScore.Value = 0;
+        SetScore(0);
         scoreCanvas.SetActive(true);
         gameOverCanvas.SetActive(false);
     }
@@ -61,29 +63,9 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    void OnDestroy()
-    {
-        if (GameManager.instance == null)
-        {
-            return;
-        }
-        
-        GameManager.instance.gameStart.RemoveListener(GameStart);
-        GameManager.instance.gameRestart.RemoveListener(GameRestart);
-        GameManager.instance.scoreChange.RemoveListener(SetScore);
-        GameManager.instance.gameOver.RemoveListener(GameOver);
-    }
-
-    void Awake()
-    {
-        GameManager.instance.gameStart.AddListener(GameStart);
-        GameManager.instance.gameRestart.AddListener(GameRestart);
-        GameManager.instance.scoreChange.AddListener(SetScore);
-        GameManager.instance.gameOver.AddListener(GameOver);
-    }
-
     void Start()
     {
-        SetScore(GameManager.instance.CurrentScore);
+        SetScore(gameScore.Value);
+        UpdateHighscore();
     }
 }

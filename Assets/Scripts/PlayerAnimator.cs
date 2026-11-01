@@ -18,6 +18,7 @@ public class PlayerAnimator : MonoBehaviour
     bool visible = true;
     bool flickerShowsSuper = false;
     bool targetIsSuper = false;
+    bool invincibleFlicker = false;
 
     public void ResetMario()
     {
@@ -45,11 +46,14 @@ public class PlayerAnimator : MonoBehaviour
         marioAnimator.runtimeAnimatorController = isSuper ? superController : smallController;
     }
 
-    void OnDestroy()
+    public void SetInvincibleFlicker(bool on)
     {
-        if (GameManager.instance != null)
+        invincibleFlicker = on;
+        nextFlick = 0f;
+        if (!on) 
         {
-            GameManager.instance.gameRestart.RemoveListener(ResetMario);
+            visible = true;
+            marioSprite.enabled = true;
         }
     }
 
@@ -60,7 +64,6 @@ public class PlayerAnimator : MonoBehaviour
 
     void Start()
     {
-        GameManager.instance.gameRestart.AddListener(ResetMario);
         marioBody = marioMovement.GetComponent<Rigidbody2D>();
     }
 
@@ -75,37 +78,43 @@ public class PlayerAnimator : MonoBehaviour
         marioSprite.flipX = !marioMovement.faceRightState;
 
         if (marioMovement.isSkid)
+        {
                 marioAnimator.SetTrigger("onSkid");
                 marioMovement.isSkid = false;
+        }
         
         marioAnimator.SetBool("onGround", grounded);
         marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.linearVelocity.x));
         marioAnimator.SetFloat("ySpeed", marioBody.linearVelocity.y);
 
-        if (Time.time < flickerUntil)
-    {
-        if (Time.time >= nextFlick)
+        bool transforming = Time.time < flickerUntil;
+        if (!transforming)
         {
-            visible = !visible;
-            marioSprite.enabled = visible;
-
-            if (!visible)
+            RuntimeAnimatorController want = targetIsSuper ? superController : smallController;
+            if (marioAnimator.runtimeAnimatorController != want)
+                marioAnimator.runtimeAnimatorController = want;
+        }
+        if (transforming || invincibleFlicker)
+        {
+            if (Time.time >= nextFlick)
             {
-                flickerShowsSuper = !flickerShowsSuper;
-                marioAnimator.runtimeAnimatorController =
-                    flickerShowsSuper ? superController : smallController;
-            }
+                visible = !visible;
+                marioSprite.enabled = visible;
 
-            nextFlick = Time.time + 0.06f;
+                if (transforming && !visible)
+                {
+                    flickerShowsSuper = !flickerShowsSuper;
+                    marioAnimator.runtimeAnimatorController =
+                        flickerShowsSuper ? superController : smallController;
+                }
+
+                nextFlick = Time.time + (transforming ? 0.06f : 0.1f);
+            }
         }
-        }
-        else if (!visible || marioAnimator.runtimeAnimatorController !=
-                (targetIsSuper ? superController : smallController))
+        else if (!visible)
         {
             visible = true;
             marioSprite.enabled = true;
-            marioAnimator.runtimeAnimatorController =
-                targetIsSuper ? superController : smallController;
         }
     }
 }

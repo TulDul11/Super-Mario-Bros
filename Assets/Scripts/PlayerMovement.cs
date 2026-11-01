@@ -6,6 +6,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("References")]
     [SerializeField] PlayerAnimator playerAnimator;
     [SerializeField] GameConstants gameConstants;
+    [SerializeField] SimpleGameEvent onGameOver;
+    [SerializeField] BoolVariable marioIsSuper;
+    [SerializeField] BoolVariable marioIsDead;
+    [SerializeField] BoolVariable marioHit;
+    [SerializeField] BoolVariable marioIsInvincible;
+    [SerializeField] StateController marioState;
+    [SerializeField] BuffStateController buffState;
 
     [Header("Box Cast")]
     [SerializeField] Vector2 boxSize;
@@ -22,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Vector2 smallColliderOffset;
     [SerializeField] Vector2 superColliderSize;
     [SerializeField] Vector2 superColliderOffset;
-    [SerializeField] float invulnerableTime = 1.5f;
 
     // Public (To other scripts)
     [NonSerialized] public bool faceRightState = true;
@@ -36,7 +42,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 startPosition;
     float moveInput;
     bool holdingJump;
-    float invulnerableUntil = 0f;
     SpriteRenderer marioSprite;
     BoxCollider2D marioCollider;
     float speed;
@@ -55,12 +60,12 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.gameObject.CompareTag("Enemy") || !alive)
+        if (!other.gameObject.CompareTag("Enemy") || marioIsDead.Value)
         {
             return;
         }
 
-        if (Time.time < invulnerableUntil)
+        if (marioIsInvincible.Value)
         {
             return;
         }
@@ -70,16 +75,18 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (isSuper)
+        if (marioIsSuper.Value)
         {
-            Shrink();
-            return;
+            marioIsSuper.Value = false;
+            marioHit.Value = true;
+        } 
+        else
+        {
+            marioIsDead.Value = true;
         }
-
-        Die();
     }
 
-    void Die()
+    public void Die()
     {
         marioBody.linearVelocity = new Vector2(0.0f, 0.0f);
         playerAnimator.PlayDeath();
@@ -96,14 +103,22 @@ public class PlayerMovement : MonoBehaviour
 
     public void ResetMario()
     {
+        marioIsSuper.Value = false;
+        marioIsDead.Value = false;
+        marioHit.Value = false;
+        marioIsInvincible.Value = false;
+
         transform.position = startPosition;
         marioBody.linearVelocity = Vector2.zero;
         faceRightState = true;
         alive = true;
-        invulnerableUntil = 0f;
+        GetComponent<Collider2D>().enabled = true;
+        
+        marioState.ResetState();
+        buffState.ResetState();
+
         SetSmallForm();
         playerAnimator.SetSuperAnimatorInstant(false);
-        GetComponent<Collider2D>().enabled = true;
     }
 
     void PlayDeathImpulse()
@@ -114,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
 
     void GameOverScene()
     {
-        GameManager.instance.GameOver();
+        onGameOver.Raise();
     }
 
     void FlipMarioSprite(int value)
@@ -196,14 +211,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         isSuper = true;
-        GameManager.instance.marioIsSuper = true;
         marioSprite.sprite = superSprite;
         marioCollider.size = superColliderSize;
         marioCollider.offset = superColliderOffset;
         playerAnimator.SetSuperAnimator(true);
     }
 
-    void MakeSuperInstant()
+    public void MakeSuperInstant()
     {
         isSuper = true;
         marioCollider.size = superColliderSize;
@@ -211,10 +225,9 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator.SetSuperAnimatorInstant(true);
     }
 
-    void SetSmallForm()
+    public void SetSmallForm()
     {
         isSuper = false;
-        GameManager.instance.marioIsSuper = false;
         marioSprite.sprite = smallSprite;
         marioCollider.size = smallColliderSize;
         marioCollider.offset = smallColliderOffset;
@@ -223,16 +236,7 @@ public class PlayerMovement : MonoBehaviour
     public void Shrink()
     {
         SetSmallForm();
-        invulnerableUntil = Time.time + invulnerableTime;
         playerAnimator.SetSuperAnimator(false);
-    }
-
-    void OnDestroy()
-    {
-        if (GameManager.instance != null)
-        {
-            GameManager.instance.gameRestart.RemoveListener(ResetMario);
-        }
     }
 
     void Awake()
@@ -242,6 +246,10 @@ public class PlayerMovement : MonoBehaviour
         marioSprite = GetComponentInChildren<SpriteRenderer>();
         marioCollider = GetComponent<BoxCollider2D>();
         
+        marioIsDead.Value = false;
+        marioHit.Value = false;
+        marioIsInvincible.Value = false;
+
         speed = gameConstants.speed;
         maxSpeed = gameConstants.maxSpeed;
         upSpeed = gameConstants.upSpeed;
@@ -249,16 +257,6 @@ public class PlayerMovement : MonoBehaviour
         riseGravity = gameConstants.riseGravity;
         fallMultiplier = gameConstants.fallMultiplier;
         lowJumpMultiplier = gameConstants.lowJumpMultiplier;
-    }
-
-    void Start()
-    {
-        GameManager.instance.gameRestart.AddListener(ResetMario);
-
-        if (GameManager.instance.marioIsSuper)
-        {
-            MakeSuperInstant();
-        }
     }
 
     void Update()
@@ -299,12 +297,12 @@ public class PlayerMovement : MonoBehaviour
             Stop();
         }
 
+        ApplyJumpGravity();
+
         if (jumpPressed)
         {
             Jump();
             jumpPressed = false;
         }
-
-        ApplyJumpGravity();
     }
 }

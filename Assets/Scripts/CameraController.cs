@@ -19,14 +19,6 @@ public class CameraController : MonoBehaviour
         transform.position = startPosition;
     }
 
-    void OnDestroy()
-    {
-        if (GameManager.instance != null)
-        {
-            GameManager.instance.gameRestart.RemoveListener(ResetCamera);
-        }
-    }
-
     void Awake()
     {
         startPosition = transform.position;
@@ -34,8 +26,6 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        GameManager.instance.gameRestart.AddListener(ResetCamera);
-
         player = GameObject.FindGameObjectWithTag("Player").transform;
         
         Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0));

@@ -179,10 +179,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d0125467eae1240b77f51a0ac06ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MagicMushroomPowerUp
+  gameScore: {fileID: 11400000, guid: c3d47ba0e4ef89e45a381544e30db1fc, type: 2}
+  onScoreChanged: {fileID: 11400000, guid: 681de350e5667ba4e97e658d4db17784, type: 2}
   type: 1
   spawned: 0
+  marioIsSuper: {fileID: 11400000, guid: 4e98ab17fb98d104683c63a9af7e3f93, type: 2}
   moveForce: 3
   emergeForce: 2
   emergeDistance: 1
   emergeTime: 0.5
   normalSortingOrder: 0
+  scoreValue: 200

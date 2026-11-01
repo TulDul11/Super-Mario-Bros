@@ -4,13 +4,16 @@ using TMPro;
 
 public class MainMenuController : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] IntVariable gameScore;
+    [SerializeField] BoolVariable marioIsSuper;
     [SerializeField] TextMeshProUGUI highscoreText;
 
     void Start()
     {
         Time.timeScale = 1f;
         gameScore.Value = 0;
+        marioIsSuper.Value = false;
         UpdateHighscore();
     }
 

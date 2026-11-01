@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34beb07e0710af49ba4173e6e092285, type: 3}
+  m_Name: NoBuff
+  m_EditorClassIdentifier: Assembly-CSharp::State
+  enterActions:
+  - {fileID: 11400000, guid: 6658a385bcb9c9d4d80bc8f59d5ecfe5, type: 2}
+  - {fileID: 11400000, guid: ffa4ef49894228c42a4b16ace5c65498, type: 2}
+  updateActions: []
+  transitions:
+  - decision: {fileID: 11400000, guid: be3ab9b0755f55c49bda792c0ec187a6, type: 2}
+    trueState: {fileID: 11400000, guid: b6c994efaecdbab4dbade555e950b3da, type: 2}
+    falseState: {fileID: 11400000, guid: 94b6c4036581456429bbd2e74a3f68d8, type: 2}
+  enterSFX: {fileID: 0}

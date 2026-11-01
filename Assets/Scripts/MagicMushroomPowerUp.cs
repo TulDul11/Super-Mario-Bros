@@ -1,8 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using UnityEditor.Search;
 
 public class MagicMushroomPowerUp : BasePowerUp
 {
+    [Header("References")]
+    [SerializeField] BoolVariable marioIsSuper;
+
     [Header("Movement")]
     [SerializeField] float moveForce = 3f;
     [SerializeField] float emergeForce = 2f;
@@ -10,10 +14,17 @@ public class MagicMushroomPowerUp : BasePowerUp
     [SerializeField] float emergeTime = 0.5f;
     [SerializeField] int normalSortingOrder = 0;
 
+    [Header("Score")]
+    [SerializeField] int scoreValue = 200;
+
+    // Private
+    AudioManager audioManager;
+
     protected override void Awake()
     {
         base.Awake();
 
+        audioManager = FindFirstObjectByType<AudioManager>();
         this.type = PowerUpType.MagicMushroom;
     }
 
@@ -61,11 +72,11 @@ public class MagicMushroomPowerUp : BasePowerUp
 
     public override void ApplyPowerUp(MonoBehaviour i)
     {
-        AudioManager.instance.PlayPowerUpSound();
-        GameManager.instance.AddScore(200);
+        audioManager.PlayPowerUpSound();
+        AddScore(scoreValue);
         if (i is PlayerMovement mario)
         {
-            mario.MakeSuper();
+            marioIsSuper.Value = true;
         }
     }
 

@@ -14,18 +14,4 @@ public class QuestionBoxManager : MonoBehaviour
             Destroy(p);
         }
     }
-
-    void OnDestroy()
-    {
-        if (GameManager.instance != null)
-        {
-            GameManager.instance.gameRestart.RemoveListener(ResetQuestionBoxes);
-        }
-        
-    }
-
-    void Start()
-    {
-        GameManager.instance.gameRestart.AddListener(ResetQuestionBoxes);
-    }
 }
