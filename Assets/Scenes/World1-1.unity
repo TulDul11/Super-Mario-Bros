@@ -1098,7 +1098,7 @@ PrefabInstance:
     - target: {fileID: 1353002402765645748, guid: b743c41a83e32cb45aa2f7df413d6dbb, type: 3}
       propertyPath: gameManager
       value: 
-      objectReference: {fileID: 807529017}
+      objectReference: {fileID: 0}
     - target: {fileID: 1865207763760860479, guid: b743c41a83e32cb45aa2f7df413d6dbb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12
@@ -1398,6 +1398,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1536,6 +1537,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   endLimit: {fileID: 1704750593}
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4152cf42fd87f9846bc9de348189a23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleGameEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 519420033}
+        m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+        m_MethodName: ResetCamera
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  simpleEvent: {fileID: 11400000, guid: 62a82de9581168a4ab9eb2fcd6d043c6, type: 2}
 --- !u!1 &521129951
 GameObject:
   m_ObjectHideFlags: 0
@@ -1736,7 +1765,7 @@ PrefabInstance:
     - target: {fileID: 7135088309654742121, guid: 7d3ae3b126b44284eb05850f91cb98e7, type: 3}
       propertyPath: gameManager
       value: 
-      objectReference: {fileID: 807529017}
+      objectReference: {fileID: 0}
     - target: {fileID: 7135088309654742121, guid: 7d3ae3b126b44284eb05850f91cb98e7, type: 3}
       propertyPath: powerUpSound
       value: 
@@ -2560,6 +2589,7 @@ GameObject:
   m_Component:
   - component: {fileID: 778612570}
   - component: {fileID: 778612571}
+  - component: {fileID: 778612572}
   m_Layer: 7
   m_Name: Question Boxes
   m_TagString: Untagged
@@ -2598,6 +2628,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362175b7e680f444697c9f36f9b106f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!114 &778612572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778612569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4152cf42fd87f9846bc9de348189a23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleGameEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 778612571}
+        m_TargetAssemblyTypeName: QuestionBoxManager, Assembly-CSharp
+        m_MethodName: ResetQuestionBoxes
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  simpleEvent: {fileID: 11400000, guid: 62a82de9581168a4ab9eb2fcd6d043c6, type: 2}
 --- !u!1001 &788851638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2613,7 +2671,7 @@ PrefabInstance:
     - target: {fileID: 1353002402765645748, guid: b743c41a83e32cb45aa2f7df413d6dbb, type: 3}
       propertyPath: gameManager
       value: 
-      objectReference: {fileID: 807529017}
+      objectReference: {fileID: 0}
     - target: {fileID: 1865207763760860479, guid: b743c41a83e32cb45aa2f7df413d6dbb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10
@@ -2817,6 +2875,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470cfbbc5302b074f9d2dadb953f6fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RestartButtonController
+  onGameRestart: {fileID: 11400000, guid: 62a82de9581168a4ab9eb2fcd6d043c6, type: 2}
+  gameScore: {fileID: 11400000, guid: c3d47ba0e4ef89e45a381544e30db1fc, type: 2}
 --- !u!1 &798935700
 GameObject:
   m_ObjectHideFlags: 0
@@ -2954,100 +3014,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 798935700}
   m_CullTransparentMesh: 1
---- !u!1 &807529016
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 807529018}
-  - component: {fileID: 807529017}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &807529017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 807529016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb352f980eef84e44acd6d93b004d767, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  gameStart:
-    m_PersistentCalls:
-      m_Calls: []
-  gameRestart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1205062273}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: GameRestart
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  scoreChange:
-    m_PersistentCalls:
-      m_Calls: []
-  gameOver:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1876254887}
-        m_TargetAssemblyTypeName: PlayerAudio, Assembly-CSharp
-        m_MethodName: PlayGameOverSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1205062273}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: GameOver
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  gameScore: {fileID: 11400000, guid: c3d47ba0e4ef89e45a381544e30db1fc, type: 2}
-  marioIsSuper: 0
---- !u!4 &807529018
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 807529016}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.17387, y: -1.24954, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &873919377
 GameObject:
   m_ObjectHideFlags: 0
@@ -4037,6 +4003,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1263530534}
   - component: {fileID: 1263530533}
+  - component: {fileID: 1263530535}
   m_Layer: 7
   m_Name: Bricks
   m_TagString: Untagged
@@ -4074,6 +4041,34 @@ Transform:
   - {fileID: 464538987}
   m_Father: {fileID: 1714446870}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1263530535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263530532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4152cf42fd87f9846bc9de348189a23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleGameEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1263530533}
+        m_TargetAssemblyTypeName: BrickManager, Assembly-CSharp
+        m_MethodName: ResetBricks
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  simpleEvent: {fileID: 11400000, guid: 62a82de9581168a4ab9eb2fcd6d043c6, type: 2}
 --- !u!1 &1292820855
 GameObject:
   m_ObjectHideFlags: 0
@@ -4214,6 +4209,10 @@ GameObject:
   - component: {fileID: 1326154031}
   - component: {fileID: 1326154030}
   - component: {fileID: 1326154032}
+  - component: {fileID: 1326154036}
+  - component: {fileID: 1326154035}
+  - component: {fileID: 1326154034}
+  - component: {fileID: 1326154033}
   m_Layer: 0
   m_Name: HUDManager
   m_TagString: Untagged
@@ -4271,6 +4270,119 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseController
   pausePanel: {fileID: 365867478}
+  audioManager: {fileID: 1205062273}
+--- !u!114 &1326154033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326154029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4152cf42fd87f9846bc9de348189a23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleGameEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1326154030}
+        m_TargetAssemblyTypeName: HUDManager, Assembly-CSharp
+        m_MethodName: GameStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  simpleEvent: {fileID: 11400000, guid: 2558ce985a254204694822170ee93dcd, type: 2}
+--- !u!114 &1326154034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326154029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4152cf42fd87f9846bc9de348189a23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleGameEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1326154030}
+        m_TargetAssemblyTypeName: HUDManager, Assembly-CSharp
+        m_MethodName: GameRestart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  simpleEvent: {fileID: 11400000, guid: 62a82de9581168a4ab9eb2fcd6d043c6, type: 2}
+--- !u!114 &1326154035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326154029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4152cf42fd87f9846bc9de348189a23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleGameEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1326154030}
+        m_TargetAssemblyTypeName: HUDManager, Assembly-CSharp
+        m_MethodName: GameOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  simpleEvent: {fileID: 11400000, guid: dece956df8033294681c4f9d0ca29786, type: 2}
+--- !u!114 &1326154036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326154029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4342a049f076fbc4c9faf81aa2f3eb97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IntGameEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1326154030}
+        m_TargetAssemblyTypeName: HUDManager, Assembly-CSharp
+        m_MethodName: SetScore
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  intEvent: {fileID: 11400000, guid: 681de350e5667ba4e97e658d4db17784, type: 2}
 --- !u!1 &1513102754
 GameObject:
   m_ObjectHideFlags: 0
@@ -4281,6 +4393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1513102755}
   - component: {fileID: 1513102756}
+  - component: {fileID: 1513102757}
   m_Layer: 6
   m_Name: Enemies
   m_TagString: Untagged
@@ -4316,6 +4429,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a04ced22b2c7b8640af9fb513a011384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
+--- !u!114 &1513102757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513102754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4152cf42fd87f9846bc9de348189a23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleGameEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1513102756}
+        m_TargetAssemblyTypeName: EnemyManager, Assembly-CSharp
+        m_MethodName: GameRestart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  simpleEvent: {fileID: 11400000, guid: 62a82de9581168a4ab9eb2fcd6d043c6, type: 2}
 --- !u!1001 &1520276163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4387,7 +4528,7 @@ PrefabInstance:
     - target: {fileID: 7135088309654742121, guid: 7d3ae3b126b44284eb05850f91cb98e7, type: 3}
       propertyPath: gameManager
       value: 
-      objectReference: {fileID: 807529017}
+      objectReference: {fileID: 0}
     - target: {fileID: 7135088309654742121, guid: 7d3ae3b126b44284eb05850f91cb98e7, type: 3}
       propertyPath: powerUpSound
       value: 
@@ -4627,6 +4768,7 @@ GameObject:
   - component: {fileID: 1601902948}
   - component: {fileID: 1601902951}
   - component: {fileID: 1601902949}
+  - component: {fileID: 1601902952}
   m_Layer: 0
   m_Name: MarioSprite
   m_TagString: Untagged
@@ -4724,6 +4866,34 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1601902952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601902947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4152cf42fd87f9846bc9de348189a23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleGameEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1601902949}
+        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
+        m_MethodName: ResetMario
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  simpleEvent: {fileID: 11400000, guid: 62a82de9581168a4ab9eb2fcd6d043c6, type: 2}
 --- !u!1 &1629121557
 GameObject:
   m_ObjectHideFlags: 0
@@ -4965,6 +5135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470cfbbc5302b074f9d2dadb953f6fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RestartButtonController
+  onGameRestart: {fileID: 11400000, guid: 62a82de9581168a4ab9eb2fcd6d043c6, type: 2}
+  gameScore: {fileID: 11400000, guid: c3d47ba0e4ef89e45a381544e30db1fc, type: 2}
 --- !u!1 &1704750592
 GameObject:
   m_ObjectHideFlags: 0
@@ -5429,6 +5601,8 @@ GameObject:
   - component: {fileID: 1876254889}
   - component: {fileID: 1876254888}
   - component: {fileID: 1876254890}
+  - component: {fileID: 1876254891}
+  - component: {fileID: 1876254892}
   m_Layer: 0
   m_Name: Mario
   m_TagString: Player
@@ -5493,6 +5667,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   playerAnimator: {fileID: 1601902949}
   gameConstants: {fileID: 11400000, guid: 79cbffdc86b609443b41f32605289fa8, type: 2}
+  onGameOver: {fileID: 11400000, guid: dece956df8033294681c4f9d0ca29786, type: 2}
+  marioIsSuper: {fileID: 11400000, guid: 4e98ab17fb98d104683c63a9af7e3f93, type: 2}
   boxSize: {x: 0.75, y: 0.15}
   maxDistance: 0.6
   layerMask:
@@ -5565,7 +5741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumpOverGoomba
   mario: {fileID: 1876254881}
-  gameManager: {fileID: 807529017}
+  onScoreChange: {fileID: 11400000, guid: 681de350e5667ba4e97e658d4db17784, type: 2}
   enemyLocation: {fileID: 1988805231}
   working: 0
 --- !u!82 &1876254886
@@ -5678,6 +5854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   playerAudio: {fileID: 1876254886}
+  audioManager: {fileID: 1205062273}
 --- !u!114 &1876254888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5843,6 +6020,62 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1876254891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876254877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4152cf42fd87f9846bc9de348189a23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleGameEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1876254881}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: ResetMario
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  simpleEvent: {fileID: 11400000, guid: 62a82de9581168a4ab9eb2fcd6d043c6, type: 2}
+--- !u!114 &1876254892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876254877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4152cf42fd87f9846bc9de348189a23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleGameEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1876254887}
+        m_TargetAssemblyTypeName: PlayerAudio, Assembly-CSharp
+        m_MethodName: PlayGameOverSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  simpleEvent: {fileID: 11400000, guid: dece956df8033294681c4f9d0ca29786, type: 2}
 --- !u!1 &1910617913
 GameObject:
   m_ObjectHideFlags: 0
@@ -5989,7 +6222,7 @@ PrefabInstance:
     - target: {fileID: 7135088309654742121, guid: 7d3ae3b126b44284eb05850f91cb98e7, type: 3}
       propertyPath: gameManager
       value: 
-      objectReference: {fileID: 807529017}
+      objectReference: {fileID: 0}
     - target: {fileID: 7135088309654742121, guid: 7d3ae3b126b44284eb05850f91cb98e7, type: 3}
       propertyPath: powerUpSound
       value: 
@@ -6458,7 +6691,7 @@ PrefabInstance:
     - target: {fileID: 7135088309654742121, guid: 7d3ae3b126b44284eb05850f91cb98e7, type: 3}
       propertyPath: gameManager
       value: 
-      objectReference: {fileID: 807529017}
+      objectReference: {fileID: 0}
     - target: {fileID: 7135088309654742121, guid: 7d3ae3b126b44284eb05850f91cb98e7, type: 3}
       propertyPath: powerUpSound
       value: 
@@ -6550,7 +6783,7 @@ PrefabInstance:
     - target: {fileID: 8698869322118658366, guid: 4e695e4162d9e1b45841cc2fb964abce, type: 3}
       propertyPath: onStomped.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 807529017}
+      objectReference: {fileID: 0}
     - target: {fileID: 8698869322118658366, guid: 4e695e4162d9e1b45841cc2fb964abce, type: 3}
       propertyPath: onStomped.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: AddScore
@@ -6583,7 +6816,7 @@ PrefabInstance:
     - target: {fileID: 1353002402765645748, guid: b743c41a83e32cb45aa2f7df413d6dbb, type: 3}
       propertyPath: gameManager
       value: 
-      objectReference: {fileID: 807529017}
+      objectReference: {fileID: 0}
     - target: {fileID: 1865207763760860479, guid: b743c41a83e32cb45aa2f7df413d6dbb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8
@@ -6970,7 +7203,6 @@ AudioSource:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 807529018}
   - {fileID: 1326154031}
   - {fileID: 1205062274}
   - {fileID: 519420032}

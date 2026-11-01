@@ -1426,6 +1426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuController
   gameScore: {fileID: 11400000, guid: c3d47ba0e4ef89e45a381544e30db1fc, type: 2}
+  marioIsSuper: {fileID: 11400000, guid: 4e98ab17fb98d104683c63a9af7e3f93, type: 2}
   highscoreText: {fileID: 334765543}
 --- !u!1 &482790433
 GameObject:
@@ -1437,6 +1438,8 @@ GameObject:
   m_Component:
   - component: {fileID: 482790435}
   - component: {fileID: 482790434}
+  - component: {fileID: 482790437}
+  - component: {fileID: 482790436}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -1479,6 +1482,62 @@ Transform:
   - {fileID: 2128854231}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &482790436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482790433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4152cf42fd87f9846bc9de348189a23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleGameEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 482790434}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: GameRestart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  simpleEvent: {fileID: 11400000, guid: 62a82de9581168a4ab9eb2fcd6d043c6, type: 2}
+--- !u!114 &482790437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482790433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4152cf42fd87f9846bc9de348189a23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleGameEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 482790434}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: GameOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  simpleEvent: {fileID: 11400000, guid: dece956df8033294681c4f9d0ca29786, type: 2}
 --- !u!1 &603785954
 GameObject:
   m_ObjectHideFlags: 0

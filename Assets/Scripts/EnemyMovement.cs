@@ -5,6 +5,7 @@ public class EnemyMovement : MonoBehaviour
     [Header("References")]
     [SerializeField] Animator goombaAnimator;
     [SerializeField] GameConstants gameConstants;
+    [SerializeField] IntGameEvent onScoreChange;
 
     // Private
     Rigidbody2D enemyBody;
@@ -56,7 +57,7 @@ public class EnemyMovement : MonoBehaviour
 
         stomped = true;
 
-        GameManager.instance.AddScore(100);
+        onScoreChange.Raise(100);
 
         goombaAnimator.SetTrigger("stomped");
         enabled = false;

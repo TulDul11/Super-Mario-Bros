@@ -9,18 +9,4 @@ public class BrickManager : MonoBehaviour
             brick.BrickReset();
         }
     }
-
-    void OnDestroy()
-    {
-        if (GameManager.instance != null)
-        {
-            GameManager.instance.gameRestart.RemoveListener(ResetBricks);
-        }
-        
-    }
-
-    void Start()
-    {
-        GameManager.instance.gameRestart.AddListener(ResetBricks);
-    }
 }

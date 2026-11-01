@@ -9,17 +9,4 @@ public class EnemyManager : MonoBehaviour
             enemy.ResetGoomba();
         }
     }
-
-    void OnDestroy()
-    {
-        if (GameManager.instance != null)
-        {
-            GameManager.instance.gameRestart.RemoveListener(GameRestart);
-        }
-    }
-
-    void Start()
-    {
-        GameManager.instance.gameRestart.AddListener(GameRestart);
-    }
 }

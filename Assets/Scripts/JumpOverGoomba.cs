@@ -5,7 +5,7 @@ public class JumpOverGoomba : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] PlayerMovement mario;
-    [SerializeField] GameManager gameManager;
+    [SerializeField] IntGameEvent onScoreChange;
     [SerializeField] Transform enemyLocation;
 
     [Header("Settings")]
@@ -32,7 +32,7 @@ public class JumpOverGoomba : MonoBehaviour
             if (Math.Abs(mario.transform.position.x - enemyLocation.position.x) < 0.5f)
             {
                 countScoreState = false;
-                gameManager.AddScore(100);
+                onScoreChange.Raise(100);
             }
         }
     }

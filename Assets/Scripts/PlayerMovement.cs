@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("References")]
     [SerializeField] PlayerAnimator playerAnimator;
     [SerializeField] GameConstants gameConstants;
+    [SerializeField] SimpleGameEvent onGameOver;
+    [SerializeField] BoolVariable marioIsSuper;
 
     [Header("Box Cast")]
     [SerializeField] Vector2 boxSize;
@@ -114,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
 
     void GameOverScene()
     {
-        GameManager.instance.GameOver();
+        onGameOver.Raise();
     }
 
     void FlipMarioSprite(int value)
@@ -196,7 +198,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         isSuper = true;
-        GameManager.instance.marioIsSuper = true;
+        marioIsSuper.Value = true;
         marioSprite.sprite = superSprite;
         marioCollider.size = superColliderSize;
         marioCollider.offset = superColliderOffset;
@@ -214,7 +216,7 @@ public class PlayerMovement : MonoBehaviour
     void SetSmallForm()
     {
         isSuper = false;
-        GameManager.instance.marioIsSuper = false;
+        marioIsSuper.Value = false;
         marioSprite.sprite = smallSprite;
         marioCollider.size = smallColliderSize;
         marioCollider.offset = smallColliderOffset;
@@ -225,14 +227,6 @@ public class PlayerMovement : MonoBehaviour
         SetSmallForm();
         invulnerableUntil = Time.time + invulnerableTime;
         playerAnimator.SetSuperAnimator(false);
-    }
-
-    void OnDestroy()
-    {
-        if (GameManager.instance != null)
-        {
-            GameManager.instance.gameRestart.RemoveListener(ResetMario);
-        }
     }
 
     void Awake()
@@ -253,9 +247,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        GameManager.instance.gameRestart.AddListener(ResetMario);
-
-        if (GameManager.instance.marioIsSuper)
+        if (marioIsSuper.Value)
         {
             MakeSuperInstant();
         }
